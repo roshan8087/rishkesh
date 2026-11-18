@@ -1,0 +1,1816 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#FFF9F0" />
+    <meta name="description" content="The Rishikesh group trip itinerary, travel information, friends, places and links." />
+    <title>Rishikesh Trip Itinerary</title>
+    <link rel="icon" href="data:," />
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, Poppins, "Segoe UI", Arial, sans-serif;
+        color: #363b38;
+        background: #fff9f0;
+        --cream: #fff9f0;
+        --white: #fff;
+        --teal: #0e7c7b;
+        --teal-dark: #096765;
+        --teal-soft: #e4f3f0;
+        --saffron: #ff7a00;
+        --saffron-dark: #db6400;
+        --saffron-soft: #fff0db;
+        --ink: #363b38;
+        --muted: #777a72;
+        --line: #eee5d7;
+        --danger: #b83c32;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; scroll-padding-top: 150px; }
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background: var(--cream);
+      }
+      button, input, textarea { font: inherit; }
+      button, a { -webkit-tap-highlight-color: transparent; }
+      button { cursor: pointer; }
+      button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible,
+      [contenteditable="true"]:focus-visible {
+        outline: 3px solid rgba(255, 122, 0, .45);
+        outline-offset: 2px;
+      }
+      a { color: var(--teal-dark); }
+      .shell { width: min(100% - 32px, 1040px); margin-inline: auto; }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 249, 240, .97);
+        backdrop-filter: blur(12px);
+      }
+      .topbar-inner {
+        display: flex;
+        min-height: 72px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding-block: 10px;
+      }
+      .brand {
+        display: grid;
+        min-width: 175px;
+        gap: 3px;
+        color: var(--teal);
+        text-decoration: none;
+      }
+      .brand strong {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 19px;
+        font-weight: 700;
+        letter-spacing: -.025em;
+      }
+      .brand small { color: var(--muted); font-size: 10px; font-weight: 700; }
+      .top-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+      .name-input, .form-input, .item-url {
+        min-width: 0;
+        height: 41px;
+        padding: 0 12px;
+        border: 1px solid #dfd6c8;
+        border-radius: 11px;
+        background: var(--white);
+        color: var(--ink);
+        font-size: 13px;
+      }
+      .name-input { width: min(230px, 24vw); }
+      .name-input::placeholder, .form-input::placeholder, .item-url::placeholder { color: #98958c; }
+      .button {
+        display: inline-flex;
+        min-height: 38px;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 0 13px;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: .035em;
+        line-height: 1.2;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+      }
+      .button:hover { filter: brightness(.97); }
+      .button-teal { border-color: var(--teal); background: var(--teal); color: white; }
+      .button-outline { border-color: #efbf8d; background: white; color: var(--saffron-dark); }
+      .button-light { border-color: var(--line); background: white; color: var(--teal-dark); }
+      .button-danger { border-color: #f0d1cb; background: white; color: var(--danger); }
+      .save-status {
+        min-width: 98px;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 700;
+        text-align: right;
+      }
+      .save-status.error { color: var(--danger); }
+
+      main { padding: 18px 0 34px; }
+      .hero, .section-card {
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: var(--white);
+        box-shadow: 0 7px 24px rgba(67, 55, 37, .055);
+      }
+      .hero { overflow: hidden; }
+      .hero-main { padding: 25px 28px 18px; }
+      .eyebrow {
+        margin: 0 0 9px;
+        color: var(--saffron-dark);
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: .16em;
+      }
+      .hero h1 {
+        margin: 0;
+        color: var(--teal);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(36px, 8vw, 65px);
+        font-weight: 800;
+        letter-spacing: -.045em;
+        line-height: 1;
+      }
+      .hero-subtitle { margin: 10px 0 0; color: var(--muted); font-size: 13px; font-weight: 700; }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        padding: 0 22px 22px;
+      }
+      .stat-card {
+        display: grid;
+        min-width: 0;
+        gap: 5px;
+        padding: 13px 10px;
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        background: #fffdf9;
+        text-align: center;
+      }
+      .stat-card:nth-child(2) { border-color: #c6e7e1; background: var(--teal-soft); }
+      .stat-card:nth-child(3) { border-color: #ffd9ae; background: var(--saffron-soft); }
+      .stat-label { color: var(--muted); font-size: 9px; font-weight: 900; letter-spacing: .13em; }
+      .stat-value {
+        color: var(--teal);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(16px, 2.8vw, 22px);
+        font-weight: 800;
+        line-height: 1.15;
+      }
+      .stat-card:nth-child(3) .stat-value { color: var(--saffron-dark); }
+      .stat-note { color: var(--muted); font-size: 10px; font-weight: 700; }
+
+      .section-list { display: grid; gap: 14px; margin-top: 22px; }
+      .section-card {
+        position: relative;
+        min-width: 0;
+        overflow: hidden;
+        scroll-margin-top: 150px;
+      }
+      .section-card::before {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 5px;
+        background: var(--teal);
+        content: "";
+      }
+      .section-card.payment-section::before { background: var(--saffron); }
+      .section-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 17px 18px 13px 20px;
+        border-bottom: 1px solid #f3eee5;
+      }
+      .section-number {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--teal-soft);
+        color: var(--teal-dark);
+        font-size: 10px;
+        font-weight: 900;
+      }
+      .payment-section .section-number { background: var(--saffron-soft); color: var(--saffron-dark); }
+      .section-title {
+        min-width: 130px;
+        flex: 1;
+        margin: 4px 0 0;
+        color: var(--teal);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 19px;
+        font-weight: 800;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+      }
+      .section-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 5px; }
+      .action-button {
+        min-height: 30px;
+        padding: 0 9px;
+        border: 1px solid #d5e8e4;
+        border-radius: 999px;
+        background: white;
+        color: var(--teal-dark);
+        font-size: 9px;
+        font-weight: 900;
+        letter-spacing: .025em;
+      }
+      .action-button:hover { background: var(--teal-soft); }
+      .action-button.delete { border-color: #f0d1cb; color: var(--danger); }
+      .action-button.delete:hover { background: #fff1ee; }
+      .section-content { padding: 16px 21px 20px 24px; }
+      .section-content > * + * { margin-top: 13px; }
+      .section-paragraph {
+        margin: 0;
+        color: #424740;
+        font-size: 13px;
+        font-weight: 550;
+        line-height: 1.75;
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
+      }
+      [contenteditable="true"] { border-radius: 4px; cursor: text; }
+      [contenteditable="true"]:hover { background: rgba(255, 240, 219, .44); }
+      [contenteditable="true"]:focus { background: #fff8ea; outline: 1px dashed #e6a14e; }
+      .section-card.is-editing .section-title,
+      .section-card.is-editing .section-paragraph,
+      .section-card.is-editing [contenteditable="true"] { background: #fff8ea; }
+      .important-box {
+        padding: 14px 15px;
+        border: 1px solid #ffd4a1;
+        border-radius: 14px;
+        background: var(--saffron-soft);
+      }
+      .important-box .section-paragraph + .section-paragraph { margin-top: 8px; }
+      .timeline { position: relative; display: grid; gap: 15px; }
+      .timeline::before {
+        position: absolute;
+        top: 7px;
+        bottom: 8px;
+        left: 7px;
+        width: 2px;
+        background: #c7e5df;
+        content: "";
+      }
+      .timeline-day { position: relative; padding-left: 24px; }
+      .timeline-day::before {
+        position: absolute;
+        top: 5px;
+        left: 1px;
+        width: 14px;
+        height: 14px;
+        border: 3px solid white;
+        border-radius: 50%;
+        background: var(--teal);
+        box-shadow: 0 0 0 1px #b8ddd5;
+        content: "";
+      }
+      .day-title { margin: 0 0 7px; color: var(--teal-dark); font-size: 12px; font-weight: 900; }
+      .timeline-events { display: grid; gap: 7px; }
+      .timeline-event { display: flex; align-items: flex-start; gap: 8px; }
+      .time-pill {
+        flex: 0 0 auto;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: var(--teal-soft);
+        color: var(--teal-dark);
+        font-size: 10px;
+        font-weight: 900;
+        line-height: 1.35;
+      }
+      .timeline-event-text { min-width: 0; padding-top: 2px; color: var(--ink); font-size: 12px; font-weight: 600; line-height: 1.55; }
+      .info-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .info-card {
+        min-width: 0;
+        padding: 13px 14px;
+        border: 1px solid #cfe7e2;
+        border-radius: 14px;
+        background: #f3fbf9;
+      }
+      .info-card-number { margin: 0 0 5px; color: var(--teal); font-size: 9px; font-weight: 900; letter-spacing: .12em; }
+      .info-card .section-paragraph { font-size: 12px; }
+      .link-list { display: grid; gap: 8px; }
+      .link-card {
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 11px 12px;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        background: #fffefb;
+      }
+      .link-info { display: grid; min-width: 0; gap: 4px; }
+      .link-title { color: var(--teal-dark); font-size: 12px; font-weight: 850; overflow-wrap: anywhere; }
+      .link-url { color: var(--muted); font-size: 10px; line-height: 1.4; overflow-wrap: anywhere; }
+      .link-actions, .item-actions { display: flex; flex-wrap: wrap; flex: 0 0 auto; align-items: center; gap: 5px; }
+      .link-actions .button { min-height: 30px; padding: 0 9px; font-size: 9px; }
+      .item-list { display: grid; gap: 8px; }
+      .item-row {
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        gap: 9px;
+        padding: 10px 11px;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        background: #fffefb;
+      }
+      .item-index {
+        display: grid;
+        width: 25px;
+        height: 25px;
+        flex: 0 0 25px;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--saffron-soft);
+        color: var(--saffron-dark);
+        font-size: 9px;
+        font-weight: 900;
+      }
+      .item-label { min-width: 0; flex: 1; font-size: 12px; font-weight: 700; line-height: 1.5; overflow-wrap: anywhere; }
+      .item-label:empty::before { color: #aaa194; content: attr(data-placeholder); font-weight: 500; }
+      .item-url { width: min(290px, 38%); height: 35px; font-size: 11px; }
+      .profile-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+      .profile-card {
+        display: grid;
+        min-width: 0;
+        gap: 8px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        background: #fffefb;
+      }
+      .profile-head { display: flex; align-items: center; gap: 8px; }
+      .profile-initial {
+        display: grid;
+        width: 32px;
+        height: 32px;
+        flex: 0 0 32px;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--teal-soft);
+        color: var(--teal-dark);
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 800;
+      }
+      .profile-name { min-width: 0; flex: 1; color: var(--teal-dark); font-size: 13px; font-weight: 850; }
+      .profile-url { width: 100%; }
+      .profile-actions { display: flex; gap: 6px; }
+      .profile-actions .button { flex: 1; }
+      .disabled-link { opacity: .48; pointer-events: none; }
+      .place-groups { display: grid; gap: 16px; }
+      .place-group-title { margin: 0 0 8px; color: var(--teal); font-family: Georgia, "Times New Roman", serif; font-size: 16px; font-weight: 800; }
+      .place-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+      .place-chip {
+        display: inline-flex;
+        max-width: 100%;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 8px 6px 10px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fffefb;
+        color: var(--ink);
+        font-size: 11px;
+        font-weight: 750;
+      }
+      .place-label { min-width: 0; max-width: 250px; overflow-wrap: anywhere; }
+      .place-open { color: var(--teal-dark); font-size: 10px; font-weight: 900; text-decoration: none; }
+      .place-action { padding: 2px 5px; border: 0; border-radius: 999px; background: var(--teal-soft); color: var(--teal-dark); font-size: 9px; font-weight: 900; }
+      .place-action.delete { background: #fff0ed; color: var(--danger); }
+      .place-form-host { flex-basis: 100%; }
+      .payment-card {
+        padding: 17px;
+        border: 1px solid #f4b166;
+        border-radius: 17px;
+        background: var(--saffron);
+        color: #fff;
+      }
+      .payment-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+      .payment-tag { margin: 0; color: #fff9ed; font-size: 10px; font-weight: 950; letter-spacing: .14em; }
+      .payment-amount { margin: 4px 0 0; color: white; font-family: Georgia, "Times New Roman", serif; font-size: clamp(30px, 7vw, 43px); font-weight: 900; line-height: 1; }
+      .deadline-badge { padding: 7px 10px; border-radius: 999px; background: #b9322d; color: white; font-size: 10px; font-weight: 950; }
+      .payment-card .payment-copy { margin: 13px 0 0; color: white; font-size: 12px; font-weight: 650; line-height: 1.65; }
+      .upi-label { margin: 15px 0 5px; color: #fff8ed; font-size: 10px; font-weight: 900; letter-spacing: .12em; }
+      .upi-row { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; }
+      .upi-id {
+        padding: 8px 10px;
+        border: 1px solid rgba(255,255,255,.55);
+        border-radius: 9px;
+        background: rgba(255,255,255,.14);
+        color: white;
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 15px;
+        font-weight: 800;
+        overflow-wrap: anywhere;
+      }
+      .copy-button { min-height: 35px; border-color: white; background: white; color: var(--saffron-dark); }
+      .qr-figure {
+        margin: 14px 0 0;
+        text-align: center;
+      }
+      .qr-photo {
+        display: block;
+        width: min(100%, 300px);
+        height: auto;
+        margin-inline: auto;
+        border: 5px solid white;
+        border-radius: 13px;
+        background: white;
+      }
+      .qr-caption {
+        margin: 8px 0 0;
+        color: white;
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: .12em;
+      }
+      .inline-form {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+        padding: 12px;
+        border: 1px solid #f3c28d;
+        border-radius: 14px;
+        background: var(--saffron-soft);
+      }
+      .inline-form label { display: grid; gap: 5px; color: var(--teal-dark); font-size: 10px; font-weight: 900; }
+      .inline-form .form-input { width: 100%; }
+      .form-actions { display: flex; align-items: center; gap: 7px; grid-column: 1 / -1; }
+      .form-error { grid-column: 1 / -1; margin: 0; color: var(--danger); font-size: 11px; font-weight: 750; }
+      .section-form-host:empty { display: none; }
+      .add-title-card {
+        padding: 17px;
+        border: 1px dashed var(--teal);
+        border-radius: 17px;
+        background: white;
+        text-align: center;
+      }
+      .add-title-card p { margin: 0 0 10px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+      .footer { padding: 25px 0 3px; color: var(--teal-dark); font-family: Georgia, "Times New Roman", serif; font-size: 16px; font-weight: 800; text-align: center; }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        clip-path: inset(50%);
+      }
+
+      @media (max-width: 760px) {
+        html { scroll-padding-top: 185px; }
+        .shell { width: min(100% - 22px, 1040px); }
+        .topbar-inner { display: grid; gap: 8px; padding-block: 8px; }
+        .brand { min-width: 0; }
+        .brand strong { font-size: 17px; }
+        .top-actions { display: grid; grid-template-columns: minmax(100px, 1fr) auto auto; gap: 6px; }
+        .name-input { width: 100%; }
+        .top-actions .button { min-height: 36px; padding-inline: 9px; font-size: 9px; }
+        .save-status { position: absolute; top: 12px; right: 12px; min-width: 0; max-width: 115px; font-size: 9px; }
+        #reload-button { grid-column: 1 / -1; }
+        main { padding-top: 12px; }
+        .hero-main { padding: 20px 17px 15px; }
+        .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; padding: 0 12px 14px; }
+        .stat-card { padding: 10px 6px; }
+        .section-list { gap: 11px; margin-top: 15px; }
+        .section-card { scroll-margin-top: 185px; }
+        .section-head { flex-wrap: wrap; gap: 8px; padding: 13px 12px 11px 15px; }
+        .section-title { font-size: 17px; }
+        .section-actions { width: 100%; justify-content: flex-start; padding-left: 42px; }
+        .section-content { padding: 13px 13px 16px 18px; }
+        .section-paragraph { font-size: 12px; }
+        .info-grid, .profile-grid { grid-template-columns: 1fr; }
+        .link-card { align-items: flex-start; flex-direction: column; }
+        .link-actions { width: 100%; }
+        .link-actions .button { flex: 1; }
+        .item-row { flex-wrap: wrap; }
+        .item-label { flex-basis: calc(100% - 42px); }
+        .item-url { width: calc(100% - 34px); margin-left: 34px; }
+        .item-actions { margin-left: auto; }
+        .timeline-event { flex-wrap: wrap; gap: 5px 8px; }
+        .inline-form { grid-template-columns: 1fr; }
+        .form-actions, .form-error { grid-column: auto; }
+      }
+      @media (max-width: 390px) {
+        .top-actions { grid-template-columns: minmax(90px, 1fr) auto auto; }
+        .top-actions .button { padding-inline: 7px; font-size: 8px; }
+        .save-status { top: 11px; max-width: 88px; }
+        .section-actions { padding-left: 0; }
+        .place-chip { font-size: 10px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="shell topbar-inner">
+        <a class="brand" href="#" aria-label="Rishikesh trip home">
+          <strong contenteditable="true" data-scope="hero" data-field="brandTitle">Rishikesh Trip</strong>
+          <small contenteditable="true" data-scope="hero" data-field="brandDates">28 Nov — 04 Dec · Group itinerary</small>
+        </a>
+        <div class="top-actions">
+          <label class="sr-only" for="your-name">Your name</label>
+          <input id="your-name" class="name-input" type="text" maxlength="80" autocomplete="name" placeholder="Your name" />
+          <button id="save-button" class="button button-teal" type="button">SAVE</button>
+          <button id="add-title-button" class="button button-outline" type="button">+ ADD TITLE</button>
+          <button id="reload-button" class="button button-light" type="button" hidden>RELOAD SHARED</button>
+          <span id="save-status" class="save-status" role="status" aria-live="polite">Ready</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="hero" aria-label="Trip overview">
+        <div class="hero-main">
+          <p class="eyebrow" contenteditable="true" data-scope="hero" data-field="eyebrow">GROUP TRIP • AHILYANAGAR TO RISHIKESH</p>
+          <h1 contenteditable="true" data-scope="hero" data-field="title">RISHIKESH TRIP ITINERARY</h1>
+          <p class="hero-subtitle" contenteditable="true" data-scope="hero" data-field="subtitle">28,29,30,1,2,3 | 27-11-2026 to 04-12-2026</p>
+        </div>
+        <div class="stats">
+          <div class="stat-card">
+            <span class="stat-label" contenteditable="true" data-scope="stat" data-index="0" data-field="label">DEPARTURE</span>
+            <strong class="stat-value" contenteditable="true" data-scope="stat" data-index="0" data-field="value">28 Nov</strong>
+            <small class="stat-note" contenteditable="true" data-scope="stat" data-index="0" data-field="note">5:30 AM</small>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label" contenteditable="true" data-scope="stat" data-index="1" data-field="label">TRAIN</span>
+            <strong class="stat-value" contenteditable="true" data-scope="stat" data-index="1" data-field="value">20h 28m</strong>
+            <small class="stat-note" contenteditable="true" data-scope="stat" data-index="1" data-field="note">1366 km</small>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label" contenteditable="true" data-scope="stat" data-index="2" data-field="label">RAFTING</span>
+            <strong class="stat-value" contenteditable="true" data-scope="stat" data-index="2" data-field="value">30 Nov</strong>
+            <small class="stat-note" contenteditable="true" data-scope="stat" data-index="2" data-field="note">River rafting</small>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label" contenteditable="true" data-scope="stat" data-index="3" data-field="label">RETURN</span>
+            <strong class="stat-value" contenteditable="true" data-scope="stat" data-index="3" data-field="value">04 Dec</strong>
+            <small class="stat-note" contenteditable="true" data-scope="stat" data-index="3" data-field="note">2:22 PM</small>
+          </div>
+        </div>
+      </section>
+
+      <div id="section-list" class="section-list"></div>
+      <footer class="footer" contenteditable="true" data-scope="hero" data-field="footer">One trip, countless memories.</footer>
+    </main>
+
+    <script>
+      "use strict";
+
+      const STORAGE_KEY = "rishikesh-trip-itinerary-single-v1";
+      const PDF_URL = "./public/itinerary/rishikesh-itinerary-original.pdf";
+      const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyOKjAMrFQVWkWK40rtOcID7nwqu6N5uTgG0WD_FVLHbccDJjctvGNaXg_NGwC4GUc-fA/exec";
+      const JSONP_TIMEOUT_MS = 15000;
+      const profileData = [
+        ["Anand", "https://www.instagram.com/anandbora09?bqrl=MWh6bm1pY2FicGliMQ=="],
+        ["Mahak", "https://www.instagram.com/mahakaa10.__?hvrq=MWF2aHNqODl0NWUxdA=="],
+        ["Nupur", "https://www.instagram.com/nupurr.___?lqvp=dWtsdHQ2em92bjE0"],
+        ["Rajat", "https://www.instagram.com/i_m_rajat07?jplx=MWdtZWpxZnJ6anIzaQ=="],
+        ["Renuka", "https://www.instagram.com/renu011_?cnvx=MWVzbmpwc3hkNHF6Yw=="],
+        ["Roshan", "https://www.instagram.com/roshan_varma____?jplx=M3BzZWdlYjYzaDBm"],
+        ["Sai", "https://www.instagram.com/saithite_?gwpx=MWhxNmhnN2VzOGM2eQ=="],
+        ["Srushti", "https://www.instagram.com/srushti_bothara?evlk=MWdyd2VobXNhYzJjdQ=="],
+        ["Tejas", "https://www.instagram.com/tejasgdekr?hvrq=MWowd2NlcGFuZWN6ZA=="],
+        ["Prajwal", "https://www.instagram.com/kon_praajwal__?gwpx=anNoczh6OTJxcTF4"],
+        ["Zawar", "https://www.instagram.com/ashhhuuuu_?cnvx=MWxheTR3dTQ5eGF5MA=="]
+      ];
+
+      const defaultState = {
+        userName: "",
+        hero: {
+          brandTitle: "Rishikesh Trip",
+          brandDates: "28 Nov — 04 Dec · Group itinerary",
+          eyebrow: "GROUP TRIP • AHILYANAGAR TO RISHIKESH",
+          title: "RISHIKESH TRIP ITINERARY",
+          subtitle: "28,29,30,1,2,3 | 27-11-2026 to 04-12-2026",
+          footer: "One trip, countless memories.",
+          stats: [
+            { label: "DEPARTURE", value: "28 Nov", note: "5:30 AM" },
+            { label: "TRAIN", value: "20h 28m", note: "1366 km" },
+            { label: "RAFTING", value: "30 Nov", note: "River rafting" },
+            { label: "RETURN", value: "04 Dec", note: "2:22 PM" }
+          ]
+        },
+        sections: [
+          {
+            id: "important", title: "IMPORTANT", kind: "important",
+            paragraphs: [
+              "EVERYONE Joining from Nagar, Pune and Jamkhed must reach Ashu's house one day before departure as we'll be leaving early around 5:30am to catch the bus.",
+              "Arrival time: According to your convenience (Friday night)."
+            ],
+            links: [
+              { id: "ashu-location", title: "Location:", url: "https://share.google/XhKxtgWUn0u2fOv3A", openLabel: "OPEN LOCATION ↗" },
+              { id: "original-pdf", title: "Original itinerary PDF", url: PDF_URL, openLabel: "Open the original 9-page itinerary PDF" }
+            ],
+            items: []
+          },
+          {
+            id: "schedule", title: "Travel Schedule", kind: "timeline",
+            days: [
+              {
+                date: "28-11-2026:",
+                events: [
+                  { time: "Before 5:30am", text: "= wake up, freshen up, take a shower, get dressed and get ready for the journey" },
+                  { time: "5:30am-06:00am", text: "= Reach Tarakpur Bus stand" },
+                  { time: "06:00am-08:30am", text: "= Reach Shirdi bus stand" },
+                  { time: "08:30am-09:00am", text: "= Shirdi bus stand-to-Shirdi Railway station" },
+                  { time: "09:00am-10:00am", text: "= Buffer time + Breakfast" }
+                ]
+              },
+              {
+                date: "29-11-2026:",
+                events: [
+                  { time: "6:30am", text: ": Arrival at Hazrat Nizamuddin: 29 November 2026, 6:28 AM" },
+                  { time: "12:00pm", text: "= check in !" },
+                  { time: "12:00PM-02:00PM", text: "= FRESH" },
+                  { time: "02:00PM-03:00PM", text: "= LUNCH" }
+                ]
+              },
+              { date: "30-11-2026:", events: [{ time: "", text: "RIVER RAFTING" }] },
+              { date: "01-12-2026:", events: [{ time: "", text: "BUNGEE JUMPING AND PARAGLIDING" }] },
+              { date: "03-12-2026:", events: [{ time: "06:15am", text: "= Train leaves Rishikesh at 6:15am" }] }
+            ],
+            links: [], items: []
+          },
+          {
+            id: "train", title: "Train Journey Details", kind: "train",
+            infoCards: [
+              "Train journey from Sai-nagar Shirdi (SNSI) to Hazrat Nizamuddin (NZM) will be approximately 20 hours 28 minutes (1366km).",
+              "Train Journey from Yog-Nagari Rishikesh to Ahmednagar will be approximately 32 hours 7 minutes (1702km)."
+            ],
+            links: [], items: []
+          },
+          {
+            id: "transport", title: "Delhi to Rishikesh Transport", kind: "transport",
+            paragraphs: [
+              "06:30am Travel Update! We have booked 2 Ertiga cars for our journey to Rishikesh. Pickup: Directly from our location in Delhi (NZM) station. Drop: Directly at Rishikesh. Cost: Rs 4,000 per car (Rs 8,000 for both cars). Distance: 238 km (Travel time: Approximately 4 hours 11 minutes). no need to worry about local buses or changing transport & BREAKFAST"
+            ],
+            links: [], items: []
+          },
+          {
+            id: "highlights", title: "Trip Highlights", kind: "highlights",
+            paragraphs: [
+              "River Rafting 30-11-2026, Bungee Jumping and Paragliding 01-12-2026, Return Journey 03-12-2026 06:15am Train leaves Rishikesh. Experience the most beautiful clean, green railway station (YOG NAGARI RAILWAY STATION). 04-December-2026 Arrival at ahilyanagar railway station : Friday afternoon (02:22pm) Home sweet Home"
+            ],
+            links: [], items: []
+          },
+          {
+            id: "important-travel", title: "Important Travel Information", kind: "important-travel",
+            paragraphs: [
+              "EVERYONE Joining from Nagar, Pune and Jamkhed must reach Ashu's house one day before departure as we'll be leaving early around 5:30am to catch the bus.",
+              "Arrival time: According to your convenience (Friday night).",
+              "no need to worry about local buses or changing transport & BREAKFAST"
+            ],
+            links: [], items: []
+          },
+          {
+            id: "splitwise", title: "Splitwise", kind: "splitwise",
+            paragraphs: ["We'll be using Splitwise App to track all our trip expenses and keep everything transparent and organised. Join link:"],
+            links: [{ id: "splitwise-join", title: "Join link", url: "https://www.splitwise.com/join/us9BmBgkgMM+1wl1rb?v=e", openLabel: "OPEN SPLITWISE ↗" }],
+            items: []
+          },
+          {
+            id: "friends", title: "Friends Instagram Profiles", kind: "friends",
+            paragraphs: [],
+            items: profileData.map((profile, index) => ({ id: `friend-${index + 1}`, name: profile[0], url: profile[1] })),
+            links: []
+          },
+          {
+            id: "telegram", title: "Telegram Group", kind: "telegram",
+            paragraphs: ["A little home for all our Rishikesh memories! We'll be sharing all our trip photos and videos in this Telegram group. Link:"],
+            links: [{ id: "telegram-link", title: "Telegram Group", url: "https://t.me/+UpPRrcjSxjBjYmVl", openLabel: "OPEN TELEGRAM ↗" }],
+            items: []
+          },
+          {
+            id: "payment", title: "Payment", kind: "payment",
+            payment: {
+              tag: "MOST IMPORTANT",
+              amount: "Rs 20,000",
+              intro: "Please pay Rs 20,000 to Ashu's UPI ID mentioned in the QR code, whenever convenient",
+              deadline: "ON OR BEFORE 28-11-2026",
+              extra: "Any money left over or any extra expenses will be adjusted equally at the end.",
+              upiLabel: "UPI ID =",
+              upiId: "ashutoshzawar22@okicici",
+              qrLabel: "QR CODE"
+            },
+            links: [], items: []
+          },
+          {
+            id: "places", title: "Places in Rishikesh", kind: "places",
+            groups: [
+              {
+                id: "waterfalls",
+                title: "Waterfalls",
+                items: [
+                  ["Neer waterfall", ""],
+                  ["GOA BEACH RISHIKESH", "https://www.instagram.com/reel/DBQYLSBzWuJ/?jplx=YmlqaHM2aHlpdDY="],
+                  ["Pink beach", ""], ["Kalikund waterfall", ""], ["Bairaj dam", ""],
+                  ["KOTLI BHEL WATERFALL", ""], ["KAUDIYALA (BEACH & CAMPING)", ""],
+                  ["MARINE DRIVE", ""], ["SECRET WATERFALL", ""]
+                ]
+              },
+              {
+                id: "cafes",
+                title: "Cafes",
+                items: [
+                  ["Little buddha cafe", "https://www.instagram.com/reel/Dd09dxVoGk3/?knvt=bmlyc3BybGh4OXh5"],
+                  ["GANGA VIEW CAFE", "https://www.instagram.com/reel/DT-VnTWE884/?bqrl=eTVmNWVxNmFqanNq"],
+                  ["THE ARCHES CAFE", "https://www.instagram.com/reel/DUQWi0TElty/?gwpx=MTRrZzI5bTNod3JidA=="],
+                  ["RAMANA'S ORGANIC CAFE", ""],
+                  ["THE QUIET CUP CAFE", "https://www.instagram.com/reel/Da7_ioGx8j5/?lqvp=MXdjb3dyYzNkdHF2dA=="],
+                  ["HIDEOUT CAFE", "https://www.instagram.com/reel/DSHxUFdCbk0/?lqvp=dmdhc3IzMGRibGV4"],
+                  ["FREEDOM CAFE", ""], ["SHAMBALA CAFE", ""], ["OM SHANTI CAFE'S", ""],
+                  ["IRA'S KITCHEN AND TEA ROOM", ""], ["TATT CAFE", ""],
+                  ["THE 60'S CAFE (THE BEATLES)", ""], ["RAJASTHANI JALPAN & BHOJNALYA", ""],
+                  ["CHOTIWALA", "https://www.instagram.com/reel/DX6rOj2vDiU/?hvrq=NmxiOGFuejVuNmE2"],
+                  ["VJ'S GIARDINE BY THE GANGES", ""]
+                ]
+              },
+              {
+                id: "other-places",
+                title: "Other Places",
+                items: [
+                  ["DAYANAND GHAT", ""], ["TAPOVAN GHAT", ""], ["TRIVENI GHAT (GANGA AARTI)", ""],
+                  ["JANKI SETU", ""], ["RAM JHULA", ""], ["KYARKI VIEWPOINT", ""]
+                ]
+              },
+              {
+                id: "temples",
+                title: "Temples",
+                items: [
+                  ["TRAYAMBAKESHWAR TEMPLE", "https://www.instagram.com/reel/DXTYRVGDzzf/?bqrl=MWpqOWhvdGw3M2llcg=="],
+                  ["SUNRISE AT KUNJAPURI TEMPLE", "https://www.instagram.com/reel/DPnjl_okTug/?bqrl=MXhlZzNwbGZoNWp6Zg=="],
+                  ["PARMARTH NIKETAN", "https://www.instagram.com/reel/DYt98pPPq6y/?lqvp=YjJlcDRmcDg1djdy"],
+                  ["KYARKI VIEWPOINT", "https://www.instagram.com/reel/DddRC-pMxAC/?dmpr=cHRyejV4dHFrbTEz"]
+                ]
+              }
+            ],
+            links: [], items: []
+          },
+          {
+            id: "stays", title: "Stays / Hotels", kind: "numbered-items",
+            itemPlaceholder: "Add a stay",
+            items: Array.from({ length: 10 }, (_, index) => ({ id: `stay-${index + 1}`, name: "", url: "" })),
+            links: []
+          },
+          {
+            id: "activities", title: "Activities", kind: "numbered-items",
+            itemPlaceholder: "Add an activity",
+            items: Array.from({ length: 10 }, (_, index) => ({ id: `activity-${index + 1}`, name: "", url: "" })),
+            links: []
+          },
+          {
+            id: "reels", title: "Reels to Make", kind: "reels",
+            itemPlaceholder: "Add a reel idea",
+            items: Array.from({ length: 10 }, (_, index) => ({ id: `reel-${index + 1}`, name: "", url: "" })),
+            links: []
+          }
+        ]
+      };
+
+      const saveStatus = document.getElementById("save-status");
+      const sectionList = document.getElementById("section-list");
+      const contributorInput = document.getElementById("your-name");
+      const reloadButton = document.getElementById("reload-button");
+      const state = loadState();
+      let dirty = false;
+      let mutationVersion = 0;
+      let apiUrl = "";
+      let remoteReady = false;
+      let remoteRevision = 0;
+      let savePromise = null;
+      let saveQueued = false;
+      let conflict = false;
+      let syncInProgress = false;
+
+      function setStatus(message, isError = false) {
+        saveStatus.textContent = message;
+        saveStatus.classList.toggle("error", isError);
+      }
+
+      function clone(value) {
+        return JSON.parse(JSON.stringify(value));
+      }
+
+      function makeId() {
+        return window.crypto && typeof window.crypto.randomUUID === "function"
+          ? window.crypto.randomUUID()
+          : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      }
+
+      function loadState() {
+        let saved;
+        try {
+          saved = localStorage.getItem(STORAGE_KEY);
+        } catch (error) {
+          setStatus(`Local storage unavailable: ${error.message}`, true);
+          return clone(defaultState);
+        }
+
+        if (saved) {
+          try {
+            const parsed = JSON.parse(saved);
+            if (parsed && parsed.hero && Array.isArray(parsed.sections)) return parsed;
+            setStatus("Saved itinerary data was invalid. Showing the original itinerary.", true);
+          } catch (error) {
+            setStatus(`Saved itinerary data could not be read: ${error.message}`, true);
+          }
+        }
+
+        const fresh = clone(defaultState);
+        try {
+          const legacyName = localStorage.getItem("rishikesh-contributor-name");
+          if (legacyName) fresh.userName = legacyName;
+          const legacyCollections = localStorage.getItem("rishikesh-link-collections");
+          if (legacyCollections) {
+            const collections = JSON.parse(legacyCollections);
+            if (Array.isArray(collections)) {
+              collections.forEach((collection, index) => {
+                fresh.sections.push({
+                  id: `saved-collection-${index}-${makeId()}`,
+                  title: String(collection.name || "Saved links"),
+                  kind: "generic",
+                  paragraphs: [],
+                  links: Array.isArray(collection.links) ? collection.links.map((link) => ({
+                    id: makeId(),
+                    title: String(link.label || link.title || link.url || "Saved link"),
+                    url: String(link.url || ""),
+                    openLabel: "OPEN ↗"
+                  })).filter((link) => link.url) : [],
+                  items: []
+                });
+              });
+            }
+          }
+        } catch (error) {
+          setStatus(`Older saved links could not be imported: ${error.message}`, true);
+        }
+        return fresh;
+      }
+
+      function safeUrl(value) {
+        const url = String(value || "").trim();
+        if (url === PDF_URL || url === "public/itinerary/rishikesh-itinerary-original.pdf") return url;
+        if (!/^https?:\/\//i.test(url)) return "";
+        try {
+          const parsed = new URL(url);
+          return parsed.protocol === "http:" || parsed.protocol === "https:" ? parsed.href : "";
+        } catch {
+          return "";
+        }
+      }
+
+      function createElement(tag, className, text) {
+        const element = document.createElement(tag);
+        if (className) element.className = className;
+        if (text !== undefined) element.textContent = text;
+        return element;
+      }
+
+      function editableText(tag, text, className, data) {
+        const element = createElement(tag, className, text || "");
+        element.contentEditable = "true";
+        element.spellcheck = false;
+        element.dataset.scope = data.scope;
+        if (data.sectionId) element.dataset.sectionId = data.sectionId;
+        if (data.field) element.dataset.field = data.field;
+        if (data.index !== undefined) element.dataset.index = data.index;
+        if (data.groupIndex !== undefined) element.dataset.groupIndex = data.groupIndex;
+        if (data.itemId) element.dataset.itemId = data.itemId;
+        if (data.linkId) element.dataset.linkId = data.linkId;
+        if (data.placeholder) element.dataset.placeholder = data.placeholder;
+        return element;
+      }
+
+      function addButton(parent, text, className, handler, type = "button") {
+        const button = createElement("button", className, text);
+        button.type = type;
+        button.addEventListener("click", handler);
+        parent.append(button);
+        return button;
+      }
+
+      function findSection(sectionId) {
+        return state.sections.find((section) => section.id === sectionId);
+      }
+
+      function findItem(section, itemId, groupIndex) {
+        if (groupIndex !== undefined && section.groups) {
+          return section.groups[Number(groupIndex)]?.items.find((item) => item.id === itemId);
+        }
+        return section.items?.find((item) => item.id === itemId);
+      }
+
+      function markUnsaved() {
+        dirty = true;
+        mutationVersion += 1;
+        if (savePromise) saveQueued = true;
+        setStatus("Unsaved changes");
+      }
+
+      function isValidState(value) {
+        return Boolean(value && value.hero && Array.isArray(value.sections));
+      }
+
+      function replaceState(value) {
+        Object.keys(state).forEach((key) => delete state[key]);
+        Object.assign(state, clone(value));
+      }
+
+      function hasPendingForm() {
+        return Boolean(sectionList.querySelector(".inline-form"));
+      }
+
+      function cacheState(value) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
+      function validateCurrentState() {
+        state.userName = contributorInput.value.trim();
+        const invalidLink = state.sections.some((section) => {
+          const invalidSectionLink = (section.links || []).some((link) => {
+            const url = safeUrl(link.url);
+            if (!url) return true;
+            link.url = url;
+            return false;
+          });
+          const invalidItemLink = (section.items || []).some((item) => {
+            if (!item.url) return false;
+            const url = safeUrl(item.url);
+            if (!url) return true;
+            item.url = url;
+            return false;
+          });
+          const invalidPlaceLink = (section.groups || []).some((group) => group.items.some((item) => {
+            if (!item.url) return false;
+            const url = safeUrl(item.url);
+            if (!url) return true;
+            item.url = url;
+            return false;
+          }));
+          return invalidSectionLink || invalidItemLink || invalidPlaceLink;
+        });
+        if (invalidLink) {
+          setStatus("Fix links to use a valid http:// or https:// address before saving.", true);
+          return false;
+        }
+        return true;
+      }
+
+      function validateAppsScriptUrl() {
+        const url = new URL(APPS_SCRIPT_URL);
+        if (url.protocol !== "https:" || url.hostname !== "script.google.com" ||
+            !/^\/macros\/s\/[^/]+\/exec$/.test(url.pathname)) {
+          throw new Error("Use the deployed Google Apps Script URL ending in /exec.");
+        }
+        return url.href;
+      }
+
+      function readSharedState() {
+        return new Promise((resolve, reject) => {
+          const callbackName = `__rishikesh_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+          const script = document.createElement("script");
+          const requestUrl = new URL(apiUrl);
+          let settled = false;
+          const cleanup = () => {
+            window.clearTimeout(timeoutId);
+            delete window[callbackName];
+            script.remove();
+          };
+          const fail = (message) => {
+            if (settled) return;
+            settled = true;
+            cleanup();
+            reject(new Error(message));
+          };
+          const timeoutId = window.setTimeout(
+            () => fail("Timed out while connecting to the Google Sheet."),
+            JSONP_TIMEOUT_MS
+          );
+
+          window[callbackName] = (result) => {
+            if (settled) return;
+            settled = true;
+            cleanup();
+            if (!result || result.ok !== true || !Number.isInteger(result.revision)) {
+              reject(new Error(result?.error || "Google Apps Script returned an invalid response."));
+              return;
+            }
+            if (result.exists && !isValidState(result.data)) {
+              reject(new Error("The shared itinerary data is invalid."));
+              return;
+            }
+            resolve(result);
+          };
+
+          requestUrl.searchParams.set("action", "load");
+          requestUrl.searchParams.set("callback", callbackName);
+          requestUrl.searchParams.set("_", String(Date.now()));
+          script.async = true;
+          script.src = requestUrl.href;
+          script.onerror = () => fail("Could not load data from Google Apps Script.");
+          document.head.append(script);
+        });
+      }
+
+      async function saveSharedState(snapshot) {
+        const expectedRevision = remoteRevision;
+        await fetch(apiUrl, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=UTF-8" },
+          body: JSON.stringify({ action: "save", expectedRevision, data: snapshot })
+        });
+
+        const latest = await readSharedState();
+        if (latest.revision > expectedRevision && JSON.stringify(latest.data) === JSON.stringify(snapshot)) {
+          remoteRevision = latest.revision;
+          return;
+        }
+        if (latest.revision !== expectedRevision) {
+          remoteRevision = latest.revision;
+          conflict = true;
+          reloadButton.hidden = false;
+          throw new Error("Someone else saved first. Reload the shared version before saving again.");
+        }
+        throw new Error("Google Sheets did not confirm the save. Check the Apps Script deployment and try again.");
+      }
+
+      function applySharedState(result, message) {
+        remoteRevision = result.revision;
+        remoteReady = true;
+        conflict = false;
+        reloadButton.hidden = true;
+        if (result.exists) {
+          replaceState(result.data);
+          const backupSaved = cacheState(state);
+          renderAll();
+          dirty = false;
+          setStatus(backupSaved
+            ? message
+            : `${message}; local backup unavailable`,
+            !backupSaved);
+          return;
+        }
+        dirty = false;
+        setStatus(message);
+      }
+
+      async function initializeStorage() {
+        renderAll();
+        if (!APPS_SCRIPT_URL) {
+          setStatus("Local-only: add the Apps Script URL to sync changes.", true);
+          return;
+        }
+
+        try {
+          apiUrl = validateAppsScriptUrl();
+          setStatus("Loading shared itinerary...");
+          const result = await readSharedState();
+          if (result.exists) {
+            if (dirty || hasPendingForm()) {
+              remoteRevision = result.revision;
+              remoteReady = true;
+              conflict = true;
+              reloadButton.hidden = false;
+              setStatus("Shared data loaded while you were editing. Reload before saving.", true);
+            } else {
+              applySharedState(result, "Loaded shared itinerary from Google Sheets");
+            }
+          } else {
+            remoteRevision = result.revision;
+            remoteReady = true;
+            setStatus("Shared sheet is empty. Press SAVE to publish this itinerary.");
+          }
+          window.setInterval(syncSharedState, 30000);
+        } catch (error) {
+          remoteReady = false;
+          setStatus(`Shared itinerary unavailable: ${error.message}`, true);
+        }
+      }
+
+      async function syncSharedState() {
+        if (!remoteReady || syncInProgress || savePromise) return;
+        syncInProgress = true;
+        try {
+          const latest = await readSharedState();
+          if (latest.revision > remoteRevision) {
+            if (dirty || hasPendingForm()) {
+              conflict = true;
+              reloadButton.hidden = false;
+              setStatus("New shared changes are available. Reload before saving.", true);
+            } else {
+              applySharedState(latest, "Updated from the shared Google Sheet");
+            }
+          }
+        } catch (error) {
+          setStatus(`Could not check shared changes: ${error.message}`, true);
+        } finally {
+          syncInProgress = false;
+        }
+      }
+
+      async function reloadSharedState() {
+        if ((dirty || hasPendingForm()) &&
+            !window.confirm("Discard your unsaved edits and load the latest shared itinerary?")) return;
+        setStatus("Loading latest shared itinerary...");
+        try {
+          const latest = await readSharedState();
+          if (latest.exists) {
+            applySharedState(latest, "Loaded the latest shared itinerary");
+          } else {
+            replaceState(defaultState);
+            remoteRevision = latest.revision;
+            remoteReady = true;
+            conflict = false;
+            dirty = false;
+            reloadButton.hidden = true;
+            renderAll();
+            setStatus("Shared sheet is empty.");
+          }
+        } catch (error) {
+          setStatus(`Could not reload shared changes: ${error.message}`, true);
+        }
+      }
+
+      function saveNow() {
+        if (!dirty) markUnsaved();
+        if (!validateCurrentState()) return Promise.resolve(false);
+        if (!APPS_SCRIPT_URL) {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            dirty = false;
+            setStatus("Saved on this device only");
+            return Promise.resolve(true);
+          } catch (error) {
+            setStatus(`Could not save changes: ${error.message}`, true);
+            return Promise.resolve(false);
+          }
+        }
+        if (!remoteReady) {
+          setStatus("Not saved: the shared Google Sheet is not connected.", true);
+          return Promise.resolve(false);
+        }
+        if (conflict) {
+          setStatus("Reload shared changes before saving again.", true);
+          return Promise.resolve(false);
+        }
+        if (savePromise) {
+          saveQueued = true;
+          return savePromise;
+        }
+
+        savePromise = (async () => {
+          do {
+            saveQueued = false;
+            const version = mutationVersion;
+            const snapshot = clone(state);
+            setStatus("Saving to Google Sheets...");
+            await saveSharedState(snapshot);
+            const backupSaved = cacheState(snapshot);
+            dirty = mutationVersion !== version;
+            if (dirty) saveQueued = true;
+            else {
+              setStatus(backupSaved
+                ? "Saved to the shared Google Sheet"
+                : "Saved to the shared Google Sheet; local backup unavailable",
+                !backupSaved);
+            }
+          } while (saveQueued && !conflict);
+          return !dirty;
+        })().catch((error) => {
+          dirty = true;
+          setStatus(`Could not save shared changes: ${error.message}`, true);
+          return false;
+        }).finally(() => {
+          savePromise = null;
+          if (saveQueued && !conflict) void saveNow();
+        });
+        return savePromise;
+      }
+
+      function applyHeroState() {
+        document.querySelectorAll('[data-scope="hero"]').forEach((element) => {
+          const field = element.dataset.field;
+          if (field in state.hero) element.textContent = state.hero[field];
+        });
+        document.querySelectorAll('[data-scope="stat"]').forEach((element) => {
+          const stat = state.hero.stats[Number(element.dataset.index)];
+          if (stat) element.textContent = stat[element.dataset.field] || "";
+        });
+      }
+
+      function renderParagraphs(section, container, extraClass = "") {
+        (section.paragraphs || []).forEach((text, index) => {
+          const paragraph = editableText("p", text, `section-paragraph ${extraClass}`.trim(), {
+            scope: "paragraph", sectionId: section.id, index
+          });
+          container.append(paragraph);
+        });
+      }
+
+      function renderTimeline(section, container) {
+        const timeline = createElement("div", "timeline");
+        (section.days || []).forEach((day, groupIndex) => {
+          const dayNode = createElement("div", "timeline-day");
+          const date = editableText("h3", day.date, "day-title", {
+            scope: "day", sectionId: section.id, groupIndex, field: "date"
+          });
+          const events = createElement("div", "timeline-events");
+          day.events.forEach((event, index) => {
+            const row = createElement("div", "timeline-event");
+            if (event.time) {
+              row.append(editableText("span", event.time, "time-pill", {
+                scope: "event", sectionId: section.id, groupIndex, index, field: "time"
+              }));
+            }
+            row.append(editableText("span", event.text, "timeline-event-text", {
+              scope: "event", sectionId: section.id, groupIndex, index, field: "text"
+            }));
+            events.append(row);
+          });
+          dayNode.append(date, events);
+          timeline.append(dayNode);
+        });
+        container.append(timeline);
+      }
+
+      function renderTrainCards(section, container) {
+        const grid = createElement("div", "info-grid");
+        (section.infoCards || []).forEach((text, index) => {
+          const card = createElement("article", "info-card");
+          card.append(
+            createElement("p", "info-card-number", `TRAIN ${String(index + 1).padStart(2, "0")}`),
+            editableText("p", text, "section-paragraph", {
+              scope: "infoCard", sectionId: section.id, index, field: "text"
+            })
+          );
+          grid.append(card);
+        });
+        container.append(grid);
+      }
+
+      function renderLinkForm(sectionId, existingLink) {
+        const sectionNode = sectionList.querySelector(`[data-section-id="${CSS.escape(sectionId)}"]`);
+        if (!sectionNode) return;
+        const host = sectionNode.querySelector(".section-form-host");
+        host.replaceChildren();
+        const form = createElement("form", "inline-form");
+        const titleLabel = createElement("label", "", "Link Title");
+        const titleInput = createElement("input", "form-input");
+        titleInput.name = "link-title";
+        titleInput.type = "text";
+        titleInput.required = true;
+        titleInput.maxLength = 180;
+        titleInput.placeholder = "Link title";
+        titleInput.value = existingLink?.title || "";
+        titleLabel.append(titleInput);
+        const urlLabel = createElement("label", "", "Link URL");
+        const urlInput = createElement("input", "form-input");
+        urlInput.name = "link-url";
+        urlInput.type = "text";
+        urlInput.required = true;
+        urlInput.inputMode = "url";
+        urlInput.placeholder = "https://…";
+        urlInput.value = existingLink?.url || "";
+        urlLabel.append(urlInput);
+        const actions = createElement("div", "form-actions");
+        const save = createElement("button", "button button-teal", "Save Link");
+        save.type = "submit";
+        const cancel = createElement("button", "button button-light", "Cancel");
+        cancel.type = "button";
+        cancel.addEventListener("click", () => host.replaceChildren());
+        actions.append(save, cancel);
+        const error = createElement("p", "form-error");
+        error.hidden = true;
+        form.append(titleLabel, urlLabel, actions, error);
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const title = titleInput.value.trim();
+          const url = urlInput.value.trim();
+          if (!title || !safeUrl(url)) {
+            error.textContent = "Enter a link title and a valid http:// or https:// web address.";
+            error.hidden = false;
+            return;
+          }
+          const section = findSection(sectionId);
+          if (!section) return;
+          if (existingLink) {
+            const link = section.links.find((entry) => entry.id === existingLink.id);
+            if (!link) return;
+            link.title = title;
+            link.url = url;
+          } else {
+            section.links.push({ id: makeId(), title, url, openLabel: "OPEN ↗" });
+          }
+          renderAll();
+          saveNow();
+        });
+        host.append(form);
+        titleInput.focus();
+      }
+
+      function renderLinks(section, container) {
+        if (!section.links || !section.links.length) return;
+        const list = createElement("div", "link-list");
+        section.links.forEach((link) => {
+          const card = createElement("article", "link-card");
+          const info = createElement("div", "link-info");
+          info.append(editableText("strong", link.title, "link-title", {
+            scope: "link", sectionId: section.id, linkId: link.id, field: "title"
+          }));
+          info.append(editableText("span", link.url, "link-url", {
+            scope: "link", sectionId: section.id, linkId: link.id, field: "url"
+          }));
+          const actions = createElement("div", "link-actions");
+          const href = safeUrl(link.url);
+          const open = createElement("a", "button button-teal link-open", link.openLabel || "OPEN ↗");
+          if (href) {
+            open.href = href;
+            open.target = "_blank";
+            open.rel = "noopener noreferrer";
+          } else open.hidden = true;
+          actions.append(open);
+          addButton(actions, "EDIT", "button button-light", () => renderLinkForm(section.id, link));
+          addButton(actions, "DELETE", "button button-danger", () => {
+            section.links = section.links.filter((entry) => entry.id !== link.id);
+            renderAll();
+            saveNow();
+          });
+          card.append(info, actions);
+          list.append(card);
+        });
+        container.append(list);
+      }
+
+      function renderStandardItems(section, container) {
+        if (!section.items || !section.items.length) return;
+        const list = createElement("div", "item-list");
+        section.items.forEach((item, index) => {
+          const row = createElement("div", "item-row");
+          row.append(createElement("span", "item-index", String(index + 1)));
+          row.append(editableText("span", item.name, "item-label", {
+            scope: "item", sectionId: section.id, itemId: item.id, field: "name",
+            placeholder: section.itemPlaceholder || "Click to add text"
+          }));
+          if (section.kind === "reels" || section.kind === "generic") {
+            const urlInput = createElement("input", "item-url");
+            urlInput.type = "text";
+            urlInput.inputMode = "url";
+            urlInput.placeholder = section.kind === "reels" ? "Item link (optional)" : "Link (optional)";
+            urlInput.value = item.url || "";
+            urlInput.dataset.scope = "item";
+            urlInput.dataset.sectionId = section.id;
+            urlInput.dataset.itemId = item.id;
+            urlInput.dataset.field = "url";
+            row.append(urlInput);
+          }
+          const link = createElement("a", "button button-light item-open", "OPEN ↗");
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          row.append(link);
+          updateItemLink(row, item);
+          addButton(row, "DELETE", "action-button delete", () => {
+            section.items = section.items.filter((entry) => entry.id !== item.id);
+            renderAll();
+            saveNow();
+          });
+          list.append(row);
+        });
+        container.append(list);
+      }
+
+      function updateItemLink(row, item) {
+        const anchor = row.querySelector(".item-open");
+        const url = safeUrl(item.url);
+        if (url) {
+          anchor.href = url;
+          anchor.hidden = false;
+        } else {
+          anchor.removeAttribute("href");
+          anchor.hidden = true;
+        }
+      }
+
+      function updateProfileLink(card, item) {
+        const anchor = card.querySelector(".profile-open");
+        const url = safeUrl(item.url);
+        if (url) {
+          anchor.href = url;
+          anchor.classList.remove("disabled-link");
+          anchor.removeAttribute("aria-disabled");
+        } else {
+          anchor.href = "#";
+          anchor.classList.add("disabled-link");
+          anchor.setAttribute("aria-disabled", "true");
+        }
+      }
+
+      function renderFriends(section, container) {
+        const grid = createElement("div", "profile-grid");
+        section.items.forEach((item) => {
+          const card = createElement("article", "profile-card");
+          const head = createElement("div", "profile-head");
+          const initial = createElement("span", "profile-initial", (item.name || "?").trim().charAt(0).toUpperCase() || "?");
+          const name = editableText("strong", item.name, "profile-name", {
+            scope: "item", sectionId: section.id, itemId: item.id, field: "name"
+          });
+          head.append(initial, name);
+          const urlInput = createElement("input", "form-input profile-url");
+          urlInput.type = "text";
+          urlInput.inputMode = "url";
+          urlInput.placeholder = "Instagram profile link";
+          urlInput.value = item.url || "";
+          urlInput.setAttribute("aria-label", `Instagram profile link for ${item.name || "friend"}`);
+          urlInput.dataset.scope = "item";
+          urlInput.dataset.sectionId = section.id;
+          urlInput.dataset.itemId = item.id;
+          urlInput.dataset.field = "url";
+          const actions = createElement("div", "profile-actions");
+          const open = createElement("a", "button button-teal profile-open", "View Profile ↗");
+          open.target = "_blank";
+          open.rel = "noopener noreferrer";
+          addButton(actions, "DELETE", "button button-danger", () => {
+            section.items = section.items.filter((entry) => entry.id !== item.id);
+            renderAll();
+            saveNow();
+          });
+          actions.prepend(open);
+          card.append(head, urlInput, actions);
+          updateProfileLink(card, item);
+          grid.append(card);
+        });
+        container.append(grid);
+      }
+
+      function renderItemLinkForm(section, item, groupIndex, host) {
+        host.replaceChildren();
+        const form = createElement("form", "inline-form");
+        const label = createElement("label", "", "Item link");
+        const input = createElement("input", "form-input");
+        input.type = "text";
+        input.inputMode = "url";
+        input.placeholder = "https://…";
+        input.value = item.url || "";
+        label.append(input);
+        const actions = createElement("div", "form-actions");
+        const save = createElement("button", "button button-teal", "Save link");
+        save.type = "submit";
+        const cancel = createElement("button", "button button-light", "Cancel");
+        cancel.type = "button";
+        cancel.addEventListener("click", () => host.replaceChildren());
+        const error = createElement("p", "form-error");
+        error.hidden = true;
+        actions.append(save, cancel);
+        form.append(label, actions, error);
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const value = input.value.trim();
+          if (!safeUrl(value)) {
+            error.textContent = "Enter a valid http:// or https:// web address.";
+            error.hidden = false;
+            return;
+          }
+          const current = findItem(section, item.id, groupIndex);
+          if (!current) return;
+          current.url = value;
+          renderAll();
+          saveNow();
+        });
+        host.append(form);
+        input.focus();
+      }
+
+      function renderPlaces(section, container) {
+        const groups = createElement("div", "place-groups");
+        section.groups.forEach((group, groupIndex) => {
+          const groupNode = createElement("div", "place-group");
+          groupNode.append(editableText("h3", group.title, "place-group-title", {
+            scope: "group", sectionId: section.id, groupIndex, field: "title"
+          }));
+          const chips = createElement("div", "place-chips");
+          group.items.forEach((item) => {
+            const chip = createElement("div", "place-chip");
+            const label = editableText("span", item.name, "place-label", {
+              scope: "item", sectionId: section.id, groupIndex, itemId: item.id, field: "name"
+            });
+            chip.append(label);
+            if (safeUrl(item.url)) {
+              const open = createElement("a", "place-open", "↗");
+              open.href = safeUrl(item.url);
+              open.target = "_blank";
+              open.rel = "noopener noreferrer";
+              open.setAttribute("aria-label", `Open link for ${item.name}`);
+              chip.append(open);
+            }
+            const formHost = createElement("div", "place-form-host");
+            addButton(chip, "LINK", "place-action", () => renderItemLinkForm(section, item, groupIndex, formHost));
+            addButton(chip, "×", "place-action delete", () => {
+              group.items = group.items.filter((entry) => entry.id !== item.id);
+              renderAll();
+              saveNow();
+            });
+            chip.append(formHost);
+            chips.append(chip);
+          });
+          groupNode.append(chips);
+          groups.append(groupNode);
+        });
+        container.append(groups);
+      }
+
+      function renderPayment(section, container) {
+        const payment = section.payment;
+        const card = createElement("div", "payment-card");
+        const top = createElement("div", "payment-top");
+        const amountBlock = createElement("div");
+        amountBlock.append(
+          editableText("p", payment.tag, "payment-tag", { scope: "payment", sectionId: section.id, field: "tag" }),
+          editableText("p", payment.amount, "payment-amount", { scope: "payment", sectionId: section.id, field: "amount" })
+        );
+        top.append(amountBlock, editableText("span", payment.deadline, "deadline-badge", {
+          scope: "payment", sectionId: section.id, field: "deadline"
+        }));
+        card.append(top);
+        card.append(editableText("p", payment.intro, "payment-copy", {
+          scope: "payment", sectionId: section.id, field: "intro"
+        }));
+        card.append(editableText("p", payment.extra, "payment-copy", {
+          scope: "payment", sectionId: section.id, field: "extra"
+        }));
+        card.append(editableText("p", payment.upiLabel, "upi-label", {
+          scope: "payment", sectionId: section.id, field: "upiLabel"
+        }));
+        const upiRow = createElement("div", "upi-row");
+        upiRow.append(editableText("code", payment.upiId, "upi-id", {
+          scope: "payment", sectionId: section.id, field: "upiId"
+        }));
+        addButton(upiRow, "Copy", "button copy-button", () => copyUpi(section.payment.upiId));
+        card.append(upiRow);
+        const qrFigure = createElement("figure", "qr-figure");
+        const qrImage = createElement("img", "qr-photo");
+        qrImage.src = "./public/itinerary/page-6-image-1.jpeg";
+        qrImage.alt = "Original payment QR code and UPI ID for Ashutosh Zawar";
+        qrImage.loading = "lazy";
+        qrFigure.append(qrImage, editableText("figcaption", payment.qrLabel, "qr-caption", {
+          scope: "payment", sectionId: section.id, field: "qrLabel"
+        }));
+        card.append(qrFigure);
+        container.append(card);
+      }
+
+      function renderSection(section, index) {
+        const article = createElement("article", `section-card${section.kind === "payment" ? " payment-section" : ""}`);
+        article.id = `section-${section.id}`;
+        article.dataset.sectionId = section.id;
+        const head = createElement("div", "section-head");
+        head.append(createElement("span", "section-number", String(index + 1).padStart(2, "0")));
+        head.append(editableText("h2", section.title, "section-title", {
+          scope: "section", sectionId: section.id, field: "title"
+        }));
+        const actions = createElement("div", "section-actions");
+        const editButton = addButton(actions, "EDIT", "action-button", () => {
+          const editing = article.classList.toggle("is-editing");
+          editButton.textContent = editing ? "DONE" : "EDIT";
+          if (editing) article.querySelector('[contenteditable="true"]')?.focus();
+        });
+        addButton(actions, "+ ADD LINK", "action-button", () => renderLinkForm(section.id));
+        addButton(actions, "+ ADD ITEM", "action-button", () => addItem(section.id));
+        addButton(actions, "DELETE", "action-button delete", () => deleteSection(section.id));
+        head.append(actions);
+
+        const content = createElement("div", "section-content");
+        if (section.kind === "important") {
+          const box = createElement("div", "important-box");
+          renderParagraphs(section, box);
+          content.append(box);
+        } else if (section.kind === "timeline") {
+          renderTimeline(section, content);
+        } else if (section.kind === "train") {
+          renderTrainCards(section, content);
+        } else if (section.kind === "payment") {
+          renderPayment(section, content);
+        } else if (section.kind === "friends") {
+          renderParagraphs(section, content);
+          renderFriends(section, content);
+        } else if (section.kind === "places") {
+          renderPlaces(section, content);
+        } else {
+          renderParagraphs(section, content);
+        }
+        renderLinks(section, content);
+        if (section.kind !== "friends" && section.kind !== "places" && section.items?.length) {
+          renderStandardItems(section, content);
+        }
+        const formHost = createElement("div", "section-form-host");
+        content.append(formHost);
+        article.append(head, content);
+        sectionList.append(article);
+      }
+
+      function renderAll() {
+        applyHeroState();
+        contributorInput.value = state.userName || "";
+        sectionList.replaceChildren();
+        state.sections.forEach(renderSection);
+      }
+
+      function addItem(sectionId) {
+        const section = findSection(sectionId);
+        if (!section) return;
+        const item = { id: makeId(), name: section.kind === "friends" ? "New friend" : "New item", url: "" };
+        if (section.kind === "places") {
+          const otherPlaces = section.groups.find((group) => group.id === "other-places") || section.groups[0];
+          otherPlaces.items.push(item);
+        } else {
+          if (!Array.isArray(section.items)) section.items = [];
+          section.items.push(item);
+        }
+        renderAll();
+        saveNow();
+        const itemNode = sectionList.querySelector(`[data-section-id="${CSS.escape(sectionId)}"] [data-item-id="${CSS.escape(item.id)}"]`);
+        itemNode?.focus();
+      }
+
+      function addTitle() {
+        const section = {
+          id: makeId(),
+          title: "New title",
+          kind: "generic",
+          paragraphs: ["Click to add details."],
+          links: [],
+          items: []
+        };
+        state.sections.push(section);
+        renderAll();
+        saveNow();
+        const sectionNode = sectionList.querySelector(`[data-section-id="${CSS.escape(section.id)}"]`);
+        sectionNode?.querySelector(".section-title")?.focus();
+        sectionNode?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      function deleteSection(sectionId) {
+        const section = findSection(sectionId);
+        if (!section) return;
+        if (!window.confirm(`Delete "${section.title}" and its contents?`)) return;
+        state.sections = state.sections.filter((entry) => entry.id !== sectionId);
+        renderAll();
+        saveNow();
+      }
+
+      async function copyUpi(value) {
+        let clipboardError = null;
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(value);
+            setStatus("UPI ID copied");
+            return;
+          }
+        } catch (error) {
+          clipboardError = error;
+        }
+        const field = document.createElement("textarea");
+        field.value = value;
+        field.style.position = "fixed";
+        field.style.opacity = "0";
+        document.body.append(field);
+        field.select();
+        let copied = false;
+        try {
+          copied = document.execCommand("copy");
+        } catch (error) {
+          clipboardError = error;
+        }
+        field.remove();
+        if (copied) {
+          setStatus("UPI ID copied");
+        } else {
+          const reason = clipboardError ? clipboardError.message : "Clipboard access was denied by this browser.";
+          setStatus(`Could not copy UPI ID: ${reason}`, true);
+        }
+      }
+
+      function updateFromEditable(element) {
+        const value = element.isContentEditable
+          ? element.innerText.replace(/\r/g, "").replace(/\n+$/, "")
+          : element.value;
+        const { scope, sectionId, field } = element.dataset;
+        if (scope === "hero") state.hero[field] = value;
+        else if (scope === "stat") state.hero.stats[Number(element.dataset.index)][field] = value;
+        else {
+          const section = findSection(sectionId);
+          if (!section) return;
+          if (scope === "section") section[field] = value;
+          else if (scope === "paragraph") section.paragraphs[Number(element.dataset.index)] = value;
+          else if (scope === "infoCard") section.infoCards[Number(element.dataset.index)] = value;
+          else if (scope === "day") section.days[Number(element.dataset.groupIndex)][field] = value;
+          else if (scope === "event") {
+            section.days[Number(element.dataset.groupIndex)].events[Number(element.dataset.index)][field] = value;
+          } else if (scope === "payment") section.payment[field] = value;
+          else if (scope === "group") section.groups[Number(element.dataset.groupIndex)][field] = value;
+          else if (scope === "item") {
+            const item = findItem(section, element.dataset.itemId, element.dataset.groupIndex);
+            if (item) item[field] = value;
+          } else if (scope === "link") {
+            const link = section.links.find((entry) => entry.id === element.dataset.linkId);
+            if (link) link[field] = value;
+          }
+        }
+        if (scope === "link" && field === "url") {
+          const open = element.closest(".link-card")?.querySelector(".link-open");
+          const href = safeUrl(value);
+          if (open && href) {
+            open.href = href;
+            open.hidden = false;
+          } else if (open) {
+            open.removeAttribute("href");
+            open.hidden = true;
+          }
+        }
+        markUnsaved();
+      }
+
+      document.getElementById("save-button").addEventListener("click", saveNow);
+      document.getElementById("add-title-button").addEventListener("click", addTitle);
+      reloadButton.addEventListener("click", reloadSharedState);
+      contributorInput.addEventListener("input", () => {
+        state.userName = contributorInput.value;
+        markUnsaved();
+      });
+
+      document.addEventListener("input", (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLElement) || !target.dataset.scope) return;
+        updateFromEditable(target);
+        if (target.dataset.scope === "item" && target.dataset.field === "url" &&
+            findSection(target.dataset.sectionId)?.kind === "friends") {
+          const section = findSection(target.dataset.sectionId);
+          const item = findItem(section, target.dataset.itemId);
+          if (item) updateProfileLink(target.closest(".profile-card"), item);
+        }
+        if (target.dataset.scope === "item" && target.dataset.field === "name" &&
+            findSection(target.dataset.sectionId)?.kind === "friends") {
+          const initial = target.closest(".profile-card")?.querySelector(".profile-initial");
+          if (initial) initial.textContent = target.textContent.trim().charAt(0).toUpperCase() || "?";
+        }
+        if (target.dataset.scope === "item" && target.dataset.field === "url") {
+          const row = target.closest(".item-row");
+          const section = findSection(target.dataset.sectionId);
+          const item = section && findItem(section, target.dataset.itemId);
+          if (row && item) updateItemLink(row, item);
+        }
+      });
+
+      document.addEventListener("click", (event) => {
+        if (!(event.target instanceof Element)) return;
+        const placeLinkButton = event.target.closest(".place-action:not(.delete)");
+        if (placeLinkButton) {
+          const chip = placeLinkButton.closest(".place-chip");
+          const itemLabel = chip.querySelector('[data-scope="item"]');
+          const section = findSection(itemLabel.dataset.sectionId);
+          const item = findItem(section, itemLabel.dataset.itemId, itemLabel.dataset.groupIndex);
+          renderItemLinkForm(section, item, itemLabel.dataset.groupIndex, chip.querySelector(".place-form-host"));
+        }
+      });
+
+      window.addEventListener("beforeunload", (event) => {
+        if (!dirty) return;
+        event.preventDefault();
+        event.returnValue = "";
+      });
+
+      void initializeStorage();
+    </script>
+  </body>
+</html>
