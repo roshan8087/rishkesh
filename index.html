@@ -638,7 +638,7 @@
       const STORAGE_KEY = "rishikesh-trip-itinerary-single-v1";
       const EDITOR_STORAGE_KEY = "rishikesh-trip-editor-identity-v1";
       const PDF_URL = "./rishikesh-itinerary-original.pdf";
-      const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwJfAoKGoG-xmVRDMNYZbGBhn1XJlTjzDkk_pg66BfgJcTrSGZf-87lGJ3OCzK_DKdBxg/exec";
+      const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby8mCtIAOqOmmuLtr4Bb6CadQbIpMQ8-__-iDJgHVu1iEyAGYD0PTftsikPvzFHlxbtUw/exec";
       const JSONP_TIMEOUT_MS = 15000;
       const profileData = [
         ["Anand", "https://www.instagram.com/anandbora09?bqrl=MWh6bm1pY2FicGliMQ=="],
@@ -1213,6 +1213,10 @@
             settled = true;
             cleanup();
             if (!result || result.ok !== true) {
+              if (result?.busy) {
+                reject(new Error(result.error || "Shared data is busy; retry shortly."));
+                return;
+              }
               const message = result?.error === "Unknown action."
                 ? "The deployed Google Apps Script is out of date. Deploy the current Code.gs as a new web-app version, then update APPS_SCRIPT_URL if it changed."
                 : (result?.error || "Google Apps Script returned an invalid response.");
@@ -1243,8 +1247,27 @@
         });
       }
 
+      function isLockBusyError(error) {
+        return /lock timeout|shared data is busy/i.test(error?.message || "");
+      }
+
+      async function readApiWithRetry(action, parameters = {}) {
+        let lastError;
+        for (let attempt = 0; attempt < 3; attempt += 1) {
+          try {
+            return await readApi(action, parameters);
+          } catch (error) {
+            lastError = error;
+            if (!isLockBusyError(error)) throw error;
+            if (attempt === 2) throw new Error("Shared data is busy. Please try again in a moment.");
+            await new Promise((resolve) => window.setTimeout(resolve, 500 * (attempt + 1)));
+          }
+        }
+        throw lastError;
+      }
+
       function readSharedState() {
-        return readApi("load");
+        return readApiWithRetry("load");
       }
 
       async function saveSharedState(baseData, snapshot) {
@@ -1267,13 +1290,17 @@
           })
         });
 
-        const status = await readApi("actionStatus", { requestId });
+        const status = await readApiWithRetry("actionStatus", { requestId });
         if (!status.found) {
           const latest = await readSharedState();
+          const remoteChanged = latest.revision > expectedRevision;
           remoteRevision = latest.revision;
-          conflict = true;
-          reloadButton.hidden = false;
-          throw new Error("Save was not confirmed. The same item may have changed elsewhere; reload and review the shared version.");
+          if (remoteChanged) {
+            conflict = true;
+            reloadButton.hidden = false;
+            throw new Error("Save was not confirmed. Shared changes are available; reload and review them before retrying.");
+          }
+          throw new Error("Google Sheets did not confirm the save. Your edits are still unsaved; try SAVE again shortly.");
         }
         const latest = await readSharedState();
         return latest;
@@ -1333,7 +1360,12 @@
           window.setInterval(syncSharedState, 30000);
         } catch (error) {
           remoteReady = false;
-          setStatus(`Shared itinerary unavailable: ${error.message}`, true);
+          if (isLockBusyError(error)) {
+            setStatus("The shared sheet is busy. Retrying automatically shortly.");
+            window.setTimeout(() => void initializeStorage(), 15000);
+          } else {
+            setStatus(`Shared itinerary unavailable: ${error.message}`, true);
+          }
         }
       }
 
@@ -1353,7 +1385,9 @@
             }
           }
         } catch (error) {
-          setStatus(`Could not check shared changes: ${error.message}`, true);
+          setStatus(isLockBusyError(error)
+            ? "Shared sheet is busy. Automatic sync will retry."
+            : `Could not check shared changes: ${error.message}`, !isLockBusyError(error));
         } finally {
           syncInProgress = false;
         }
@@ -1379,7 +1413,9 @@
             setStatus("Shared sheet is empty.");
           }
         } catch (error) {
-          setStatus(`Could not reload shared changes: ${error.message}`, true);
+          setStatus(isLockBusyError(error)
+            ? "Shared sheet is busy. Try reloading again in a moment."
+            : `Could not reload shared changes: ${error.message}`, !isLockBusyError(error));
         }
       }
 
@@ -1440,7 +1476,9 @@
           return !dirty;
         })().catch((error) => {
           dirty = true;
-          setStatus(`Could not save shared changes: ${error.message}`, true);
+          setStatus(isLockBusyError(error)
+            ? "Shared sheet is busy. Your edits are still unsaved; try SAVE again shortly."
+            : `Could not save shared changes: ${error.message}`, true);
           return false;
         }).finally(() => {
           savePromise = null;
@@ -1957,7 +1995,7 @@
       async function refreshHistory() {
         if (!apiUrl) return;
         try {
-          const data = await readApi("history", { editorId: editorIdentity?.id || "" });
+          const data = await readApiWithRetry("history", { editorId: editorIdentity?.id || "" });
           if (!managementPanel.hidden) renderHistory(data);
           else {
             undoCount = data.undoCount;
@@ -1966,7 +2004,9 @@
           }
           return data;
         } catch (error) {
-          setStatus(`Could not load shared history: ${error.message}`, true);
+          setStatus(isLockBusyError(error)
+            ? "Shared history is busy. Try again in a moment."
+            : `Could not load shared history: ${error.message}`, !isLockBusyError(error));
           return null;
         }
       }
