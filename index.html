@@ -637,7 +637,7 @@
 
       const STORAGE_KEY = "rishikesh-trip-itinerary-single-v1";
       const EDITOR_STORAGE_KEY = "rishikesh-trip-editor-identity-v1";
-      const PDF_URL = "./public/itinerary/rishikesh-itinerary-original.pdf";
+      const PDF_URL = "./rishikesh-itinerary-original.pdf";
       const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwJfAoKGoG-xmVRDMNYZbGBhn1XJlTjzDkk_pg66BfgJcTrSGZf-87lGJ3OCzK_DKdBxg/exec";
       const JSONP_TIMEOUT_MS = 15000;
       const profileData = [
@@ -1015,7 +1015,11 @@
 
       function safeUrl(value) {
         const url = String(value || "").trim();
-        if (url === PDF_URL || url === "public/itinerary/rishikesh-itinerary-original.pdf") return url;
+        if ([
+          PDF_URL,
+          "./public/itinerary/rishikesh-itinerary-original.pdf",
+          "public/itinerary/rishikesh-itinerary-original.pdf"
+        ].includes(url)) return PDF_URL;
         if (!/^https?:\/\//i.test(url)) return "";
         try {
           const parsed = new URL(url);
@@ -1818,9 +1822,17 @@
         card.append(upiRow);
         const qrFigure = createElement("figure", "qr-figure");
         const qrImage = createElement("img", "qr-photo");
-        qrImage.src = "./public/itinerary/page-6-image-1.jpeg";
+        qrImage.src = "./page-6-image-1.jpeg";
         qrImage.alt = "Original payment QR code and UPI ID for Ashutosh Zawar";
         qrImage.loading = "lazy";
+        qrImage.addEventListener("error", () => {
+          if (qrImage.dataset.triedNestedPath) {
+            setStatus("QR image not found. Upload page-6-image-1.jpeg at the repository root or public/itinerary/.", true);
+            return;
+          }
+          qrImage.dataset.triedNestedPath = "true";
+          qrImage.src = "./public/itinerary/page-6-image-1.jpeg";
+        });
         qrFigure.append(qrImage, editableText("figcaption", payment.qrLabel, "qr-caption", {
           scope: "payment", sectionId: section.id, field: "qrLabel"
         }));
