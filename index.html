@@ -31,6 +31,7 @@
       }
 
       * { box-sizing: border-box; }
+      [hidden] { display: none !important; }
       html { scroll-behavior: smooth; scroll-padding-top: 150px; }
       body {
         min-height: 100vh;
@@ -121,6 +122,23 @@
         text-align: right;
       }
       .save-status.error { color: var(--danger); }
+      .editor-id { max-width: 180px; color: var(--muted); font-size: 9px; font-weight: 700; overflow-wrap: anywhere; }
+      .management-panel {
+        margin-top: 20px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--white);
+      }
+      .management-panel h2 { margin: 0 0 12px; color: var(--teal); font: 700 22px Georgia, "Times New Roman", serif; }
+      .management-list { display: grid; gap: 10px; }
+      .management-entry { padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: #fffdf9; }
+      .management-entry h3 { margin: 0; color: var(--teal-dark); font-size: 14px; }
+      .management-entry > p { margin: 6px 0 0; color: var(--muted); font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; }
+      .management-entry details { margin-top: 8px; color: var(--muted); font-size: 11px; }
+      .management-entry pre { max-height: 220px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
+      .management-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+      button:disabled { cursor: not-allowed; opacity: .5; }
 
       main { padding: 18px 0 34px; }
       .hero, .section-card {
@@ -324,6 +342,16 @@
       .link-info { display: grid; min-width: 0; gap: 4px; }
       .link-title { color: var(--teal-dark); font-size: 12px; font-weight: 850; overflow-wrap: anywhere; }
       .link-url { color: var(--muted); font-size: 10px; line-height: 1.4; overflow-wrap: anywhere; }
+      .link-card.instagram-link-card { align-items: flex-start; flex-direction: column; }
+      .instagram-preview {
+        display: block;
+        width: min(100%, 400px);
+        height: 500px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: white;
+      }
+      .instagram-preview-note { color: var(--muted); font-size: 10px; line-height: 1.5; }
       .link-actions, .item-actions { display: flex; flex-wrap: wrap; flex: 0 0 auto; align-items: center; gap: 5px; }
       .link-actions .button { min-height: 30px; padding: 0 9px; font-size: 9px; }
       .item-list { display: grid; gap: 8px; }
@@ -396,6 +424,16 @@
         font-size: 11px;
         font-weight: 750;
       }
+      .place-chip.instagram-place-chip {
+        display: grid;
+        flex-basis: min(100%, 420px);
+        justify-items: start;
+        align-items: start;
+        border-radius: 14px;
+        white-space: normal;
+      }
+      .instagram-place-chip .instagram-preview { width: min(100%, 390px); }
+      .instagram-place-chip .place-form-host { width: 100%; }
       .place-label { min-width: 0; max-width: 250px; overflow-wrap: anywhere; }
       .place-open { color: var(--teal-dark); font-size: 10px; font-weight: 900; text-decoration: none; }
       .place-action { padding: 2px 5px; border: 0; border-radius: 999px; background: var(--teal-soft); color: var(--teal-dark); font-size: 9px; font-weight: 900; }
@@ -487,7 +525,9 @@
         .topbar-inner { display: grid; gap: 8px; padding-block: 8px; }
         .brand { min-width: 0; }
         .brand strong { font-size: 17px; }
-        .top-actions { display: grid; grid-template-columns: minmax(100px, 1fr) auto auto; gap: 6px; }
+        .top-actions { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 6px; }
+        .top-actions .button { min-height: 34px; padding-inline: 8px; font-size: 9px; }
+        .editor-id { flex-basis: 100%; }
         .name-input { width: 100%; }
         .top-actions .button { min-height: 36px; padding-inline: 9px; font-size: 9px; }
         .save-status { position: absolute; top: 12px; right: 12px; min-width: 0; max-width: 115px; font-size: 9px; }
@@ -516,7 +556,7 @@
         .form-actions, .form-error { grid-column: auto; }
       }
       @media (max-width: 390px) {
-        .top-actions { grid-template-columns: minmax(90px, 1fr) auto auto; }
+        .top-actions { justify-content: flex-start; }
         .top-actions .button { padding-inline: 7px; font-size: 8px; }
         .save-status { top: 11px; max-width: 88px; }
         .section-actions { padding-left: 0; }
@@ -537,6 +577,12 @@
         <div class="top-actions">
           <label class="sr-only" for="your-name">Your name</label>
           <input id="your-name" class="name-input" type="text" maxlength="80" autocomplete="name" placeholder="Your name" />
+          <span id="editor-indicator" class="editor-id" hidden></span>
+          <button id="editor-start-button" class="button button-outline" type="button">START EDITING</button>
+          <button id="editor-name-button" class="button button-light" type="button" hidden>CHANGE NAME</button>
+          <button id="history-button" class="button button-light" type="button">HISTORY</button>
+          <button id="undo-button" class="button button-light" type="button" disabled>UNDO</button>
+          <button id="redo-button" class="button button-light" type="button" disabled>REDO</button>
           <button id="save-button" class="button button-teal" type="button">SAVE</button>
           <button id="add-title-button" class="button button-outline" type="button">+ ADD TITLE</button>
           <button id="reload-button" class="button button-light" type="button" hidden>RELOAD SHARED</button>
@@ -577,6 +623,12 @@
       </section>
 
       <div id="section-list" class="section-list"></div>
+      <section id="management-panel" class="management-panel" hidden aria-live="polite">
+        <h2>Shared Activity History</h2>
+        <div id="history-list" class="management-list"></div>
+        <h2 style="margin-top: 22px">Recently Deleted</h2>
+        <div id="deleted-list" class="management-list"></div>
+      </section>
       <footer class="footer" contenteditable="true" data-scope="hero" data-field="footer">One trip, countless memories.</footer>
     </main>
 
@@ -584,8 +636,9 @@
       "use strict";
 
       const STORAGE_KEY = "rishikesh-trip-itinerary-single-v1";
+      const EDITOR_STORAGE_KEY = "rishikesh-trip-editor-identity-v1";
       const PDF_URL = "./public/itinerary/rishikesh-itinerary-original.pdf";
-      const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyOKjAMrFQVWkWK40rtOcID7nwqu6N5uTgG0WD_FVLHbccDJjctvGNaXg_NGwC4GUc-fA/exec";
+      const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwJfAoKGoG-xmVRDMNYZbGBhn1XJlTjzDkk_pg66BfgJcTrSGZf-87lGJ3OCzK_DKdBxg/exec";
       const JSONP_TIMEOUT_MS = 15000;
       const profileData = [
         ["Anand", "https://www.instagram.com/anandbora09?bqrl=MWh6bm1pY2FicGliMQ=="],
@@ -797,8 +850,21 @@
       const saveStatus = document.getElementById("save-status");
       const sectionList = document.getElementById("section-list");
       const contributorInput = document.getElementById("your-name");
+      const editorIndicator = document.getElementById("editor-indicator");
+      const editorStartButton = document.getElementById("editor-start-button");
+      const editorNameButton = document.getElementById("editor-name-button");
+      const undoButton = document.getElementById("undo-button");
+      const redoButton = document.getElementById("redo-button");
+      const managementPanel = document.getElementById("management-panel");
+      const historyList = document.getElementById("history-list");
+      const deletedList = document.getElementById("deleted-list");
       const reloadButton = document.getElementById("reload-button");
       const state = loadState();
+      let editorIdentity = null;
+      let editingEnabled = false;
+      let syncedData = null;
+      let undoCount = 0;
+      let redoCount = 0;
       let dirty = false;
       let mutationVersion = 0;
       let apiUrl = "";
@@ -822,6 +888,79 @@
         return window.crypto && typeof window.crypto.randomUUID === "function"
           ? window.crypto.randomUUID()
           : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      }
+
+      function initializeEditorIdentity() {
+        try {
+          const stored = localStorage.getItem(EDITOR_STORAGE_KEY);
+          if (stored) {
+            const identity = JSON.parse(stored);
+            if (identity && typeof identity.id === "string" && typeof identity.name === "string" &&
+                identity.id.length >= 16 && identity.name.trim()) {
+              editorIdentity = { id: identity.id, name: identity.name.trim() };
+              editingEnabled = true;
+            }
+          }
+        } catch (error) {
+          setStatus(`Could not read the saved editor identity: ${error.message}`, true);
+        }
+
+        updateEditorControls();
+        if (!editingEnabled) setStatus("Enter your name and select START EDITING before making changes.");
+      }
+
+      function activateEditor(name) {
+        const cleanName = String(name || "").trim();
+        if (!cleanName || cleanName.length > 80) {
+          setStatus("Enter a name between 1 and 80 characters before editing.", true);
+          contributorInput.focus();
+          return false;
+        }
+        editorIdentity = {
+          id: editorIdentity?.id || makeId(),
+          name: cleanName
+        };
+        try {
+          localStorage.setItem(EDITOR_STORAGE_KEY, JSON.stringify(editorIdentity));
+        } catch (error) {
+          editorIdentity = null;
+          editingEnabled = false;
+          updateEditorControls();
+          setStatus(`Could not remember your editor identity: ${error.message}`, true);
+          return false;
+        }
+        editingEnabled = true;
+        updateEditorControls();
+        setStatus(`Editing as ${editorIdentity.name}. This browser ID is not secure authentication.`);
+        void refreshHistory();
+        return true;
+      }
+
+      function updateEditorControls() {
+        contributorInput.hidden = editingEnabled;
+        editorStartButton.hidden = editingEnabled;
+        editorNameButton.hidden = !editingEnabled;
+        editorIndicator.hidden = !editingEnabled;
+        editorIndicator.textContent = editingEnabled
+          ? `Editing as ${editorIdentity.name} · ID ${editorIdentity.id}`
+          : "";
+        document.querySelectorAll("[contenteditable]").forEach((element) => {
+          element.contentEditable = String(editingEnabled);
+        });
+        sectionList.querySelectorAll("button, input").forEach((element) => {
+          element.disabled = !editingEnabled;
+        });
+        document.getElementById("save-button").disabled = !editingEnabled;
+        document.getElementById("add-title-button").disabled = !editingEnabled;
+        undoButton.disabled = !editingEnabled || undoCount === 0;
+        redoButton.disabled = !editingEnabled || redoCount === 0;
+      }
+
+      function requireEditor() {
+        if (editingEnabled && editorIdentity) return true;
+        setStatus("Enter your name and select START EDITING before making changes.", true);
+        contributorInput.focus();
+        return false;
       }
 
       function loadState() {
@@ -884,6 +1023,53 @@
         } catch {
           return "";
         }
+      }
+
+      function instagramEmbedDetails(value) {
+        try {
+          const url = new URL(String(value || ""));
+          if (url.protocol !== "https:" || !["instagram.com", "www.instagram.com"].includes(url.hostname)) return null;
+          const match = url.pathname.match(/^\/(p|reel|tv)\/([A-Za-z0-9_-]+)\/?$/);
+          return match ? { type: match[1], shortcode: match[2] } : null;
+        } catch {
+          return null;
+        }
+      }
+
+      function isInstagramUrl(value) {
+        try {
+          const url = new URL(String(value || ""));
+          return ["instagram.com", "www.instagram.com"].includes(url.hostname);
+        } catch {
+          return false;
+        }
+      }
+
+      function createInstagramPreview(value) {
+        const details = instagramEmbedDetails(value);
+        if (!details) return null;
+        const frame = createElement("iframe", "instagram-preview");
+        frame.src = `https://www.instagram.com/${details.type}/${details.shortcode}/embed/`;
+        frame.title = "Instagram post preview";
+        frame.loading = "lazy";
+        frame.referrerPolicy = "strict-origin-when-cross-origin";
+        frame.allow = "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share";
+        frame.allowFullscreen = true;
+        return frame;
+      }
+
+      function updateInstagramPreview(container, value) {
+        container.querySelectorAll(".instagram-preview, .instagram-preview-note").forEach((element) => element.remove());
+        const preview = createInstagramPreview(value);
+        if (preview) container.append(preview);
+        else if (isInstagramUrl(value)) {
+          container.append(createElement(
+            "small",
+            "instagram-preview-note",
+            "Instagram profiles cannot be embedded here. Open the profile, or use a public post/reel link for a preview."
+          ));
+        }
+        container.closest(".link-card")?.classList.toggle("instagram-link-card", Boolean(preview));
       }
 
       function createElement(tag, className, text) {
@@ -957,7 +1143,6 @@
       }
 
       function validateCurrentState() {
-        state.userName = contributorInput.value.trim();
         const invalidLink = state.sections.some((section) => {
           const invalidSectionLink = (section.links || []).some((link) => {
             const url = safeUrl(link.url);
@@ -997,7 +1182,7 @@
         return url.href;
       }
 
-      function readSharedState() {
+      function readApi(action, parameters = {}) {
         return new Promise((resolve, reject) => {
           const callbackName = `__rishikesh_${Date.now()}_${Math.random().toString(36).slice(2)}`;
           const script = document.createElement("script");
@@ -1023,18 +1208,28 @@
             if (settled) return;
             settled = true;
             cleanup();
-            if (!result || result.ok !== true || !Number.isInteger(result.revision)) {
-              reject(new Error(result?.error || "Google Apps Script returned an invalid response."));
+            if (!result || result.ok !== true) {
+              const message = result?.error === "Unknown action."
+                ? "The deployed Google Apps Script is out of date. Deploy the current Code.gs as a new web-app version, then update APPS_SCRIPT_URL if it changed."
+                : (result?.error || "Google Apps Script returned an invalid response.");
+              reject(new Error(message));
               return;
             }
-            if (result.exists && !isValidState(result.data)) {
+            if (action === "load" && !Number.isInteger(result.revision)) {
+              reject(new Error("Google Apps Script returned an invalid revision."));
+              return;
+            }
+            if (action === "load" && result.exists && !isValidState(result.data)) {
               reject(new Error("The shared itinerary data is invalid."));
               return;
             }
             resolve(result);
           };
 
-          requestUrl.searchParams.set("action", "load");
+          requestUrl.searchParams.set("action", action);
+          Object.entries(parameters).forEach(([key, value]) => {
+            requestUrl.searchParams.set(key, String(value));
+          });
           requestUrl.searchParams.set("callback", callbackName);
           requestUrl.searchParams.set("_", String(Date.now()));
           script.async = true;
@@ -1044,27 +1239,40 @@
         });
       }
 
-      async function saveSharedState(snapshot) {
+      function readSharedState() {
+        return readApi("load");
+      }
+
+      async function saveSharedState(baseData, snapshot) {
+        if (baseData && JSON.stringify(baseData) === JSON.stringify(snapshot)) {
+          return readSharedState();
+        }
         const expectedRevision = remoteRevision;
+        const requestId = makeId();
         await fetch(apiUrl, {
           method: "POST",
           mode: "no-cors",
           headers: { "Content-Type": "text/plain;charset=UTF-8" },
-          body: JSON.stringify({ action: "save", expectedRevision, data: snapshot })
+          body: JSON.stringify({
+            action: "mutate",
+            expectedRevision,
+            baseData,
+            data: snapshot,
+            editor: editorIdentity,
+            requestId
+          })
         });
 
-        const latest = await readSharedState();
-        if (latest.revision > expectedRevision && JSON.stringify(latest.data) === JSON.stringify(snapshot)) {
-          remoteRevision = latest.revision;
-          return;
-        }
-        if (latest.revision !== expectedRevision) {
+        const status = await readApi("actionStatus", { requestId });
+        if (!status.found) {
+          const latest = await readSharedState();
           remoteRevision = latest.revision;
           conflict = true;
           reloadButton.hidden = false;
-          throw new Error("Someone else saved first. Reload the shared version before saving again.");
+          throw new Error("Save was not confirmed. The same item may have changed elsewhere; reload and review the shared version.");
         }
-        throw new Error("Google Sheets did not confirm the save. Check the Apps Script deployment and try again.");
+        const latest = await readSharedState();
+        return latest;
       }
 
       function applySharedState(result, message) {
@@ -1072,6 +1280,7 @@
         remoteReady = true;
         conflict = false;
         reloadButton.hidden = true;
+        syncedData = result.exists ? clone(result.data) : null;
         if (result.exists) {
           replaceState(result.data);
           const backupSaved = cacheState(state);
@@ -1083,6 +1292,8 @@
             !backupSaved);
           return;
         }
+        replaceState(defaultState);
+        renderAll();
         dirty = false;
         setStatus(message);
       }
@@ -1111,8 +1322,10 @@
           } else {
             remoteRevision = result.revision;
             remoteReady = true;
+            syncedData = null;
             setStatus("Shared sheet is empty. Press SAVE to publish this itinerary.");
           }
+          void refreshHistory();
           window.setInterval(syncSharedState, 30000);
         } catch (error) {
           remoteReady = false;
@@ -1132,6 +1345,7 @@
               setStatus("New shared changes are available. Reload before saving.", true);
             } else {
               applySharedState(latest, "Updated from the shared Google Sheet");
+              void refreshHistory();
             }
           }
         } catch (error) {
@@ -1153,6 +1367,7 @@
             replaceState(defaultState);
             remoteRevision = latest.revision;
             remoteReady = true;
+            syncedData = null;
             conflict = false;
             dirty = false;
             reloadButton.hidden = true;
@@ -1165,6 +1380,7 @@
       }
 
       function saveNow() {
+        if (!requireEditor()) return Promise.resolve(false);
         if (!dirty) markUnsaved();
         if (!validateCurrentState()) return Promise.resolve(false);
         if (!APPS_SCRIPT_URL) {
@@ -1196,17 +1412,26 @@
             saveQueued = false;
             const version = mutationVersion;
             const snapshot = clone(state);
+            const baseData = syncedData === null ? null : clone(syncedData);
             setStatus("Saving to Google Sheets...");
-            await saveSharedState(snapshot);
-            const backupSaved = cacheState(snapshot);
+            const latest = await saveSharedState(baseData, snapshot);
+            remoteRevision = latest.revision;
+            syncedData = latest.exists ? clone(latest.data) : null;
             dirty = mutationVersion !== version;
-            if (dirty) saveQueued = true;
-            else {
+            if (dirty) {
+              saveQueued = true;
+            } else if (latest.exists) {
+              replaceState(latest.data);
+              renderAll();
+              const backupSaved = cacheState(state);
               setStatus(backupSaved
                 ? "Saved to the shared Google Sheet"
                 : "Saved to the shared Google Sheet; local backup unavailable",
                 !backupSaved);
+            } else {
+              setStatus("The shared itinerary was cleared. Reload before saving.");
             }
+            void refreshHistory();
           } while (saveQueued && !conflict);
           return !dirty;
         })().catch((error) => {
@@ -1353,6 +1578,7 @@
           info.append(editableText("span", link.url, "link-url", {
             scope: "link", sectionId: section.id, linkId: link.id, field: "url"
           }));
+          updateInstagramPreview(info, link.url);
           const actions = createElement("div", "link-actions");
           const href = safeUrl(link.url);
           const open = createElement("a", "button button-teal link-open", link.openLabel || "OPEN ↗");
@@ -1521,7 +1747,11 @@
           }));
           const chips = createElement("div", "place-chips");
           group.items.forEach((item) => {
-            const chip = createElement("div", "place-chip");
+            const preview = createInstagramPreview(item.url);
+            const chip = createElement(
+              "div",
+              `place-chip${preview ? " instagram-place-chip" : ""}`
+            );
             const label = editableText("span", item.name, "place-label", {
               scope: "item", sectionId: section.id, groupIndex, itemId: item.id, field: "name"
             });
@@ -1533,6 +1763,14 @@
               open.rel = "noopener noreferrer";
               open.setAttribute("aria-label", `Open link for ${item.name}`);
               chip.append(open);
+            }
+            if (preview) chip.append(preview);
+            else if (isInstagramUrl(item.url)) {
+              chip.append(createElement(
+                "small",
+                "instagram-preview-note",
+                "Use a public post/reel URL to show a preview."
+              ));
             }
             const formHost = createElement("div", "place-form-host");
             addButton(chip, "LINK", "place-action", () => renderItemLinkForm(section, item, groupIndex, formHost));
@@ -1641,12 +1879,126 @@
 
       function renderAll() {
         applyHeroState();
-        contributorInput.value = state.userName || "";
         sectionList.replaceChildren();
         state.sections.forEach(renderSection);
+        updateEditorControls();
+      }
+
+      function renderHistory(data) {
+        historyList.replaceChildren();
+        deletedList.replaceChildren();
+        if (!data.actions.length) {
+          historyList.append(createElement("p", "management-entry", "No shared edits have been recorded yet."));
+        } else {
+          data.actions.forEach((action) => {
+            const entry = createElement("article", "management-entry");
+            entry.append(createElement("h3", "", `${action.type} · ${action.itemName}`));
+            entry.append(createElement(
+              "p",
+              "",
+              `By ${action.editorName} (ID ${action.editorId}) · ${new Date(action.timestamp).toLocaleString()} · Revision ${action.revision}`
+            ));
+            const details = createElement("details");
+            details.append(createElement("summary", "", "Previous and new values"));
+            const values = action.changes.map((change) => ({
+              previous: change.beforeExists ? change.beforeValue : null,
+              next: change.afterExists ? change.afterValue : null
+            }));
+            details.append(createElement("pre", "", JSON.stringify(values, null, 2)));
+            entry.append(details);
+            historyList.append(entry);
+          });
+        }
+
+        if (!data.deletedItems.length) {
+          deletedList.append(createElement("p", "management-entry", "There are no recently deleted items."));
+        } else {
+          data.deletedItems.forEach((item) => {
+            const entry = createElement("article", "management-entry");
+            entry.append(createElement("h3", "", item.itemName));
+            entry.append(createElement(
+              "p",
+              "",
+              `Deleted by ${item.deletedBy} (ID ${item.editorId}) · ${new Date(item.deletedAt).toLocaleString()}`
+            ));
+            const details = createElement("details");
+            details.append(createElement("summary", "", "Deleted value"));
+            details.append(createElement("pre", "", JSON.stringify(item.value, null, 2)));
+            entry.append(details);
+            const actions = createElement("div", "management-actions");
+            addButton(actions, "RESTORE", "button button-teal", () => {
+              void runEditorCommand({ action: "restore", deletionId: item.deletionId }, "Item restored.");
+            });
+            addButton(actions, "DELETE PERMANENTLY", "button button-danger", () => {
+              if (!window.confirm(`Permanently delete "${item.itemName}" from Recently Deleted? This cannot be undone.`)) return;
+              void runEditorCommand({ action: "purge", deletionId: item.deletionId }, "Item permanently deleted from Recently Deleted.");
+            });
+            entry.append(actions);
+            deletedList.append(entry);
+          });
+        }
+        undoCount = data.undoCount;
+        redoCount = data.redoCount;
+        updateEditorControls();
+      }
+
+      async function refreshHistory() {
+        if (!apiUrl) return;
+        try {
+          const data = await readApi("history", { editorId: editorIdentity?.id || "" });
+          if (!managementPanel.hidden) renderHistory(data);
+          else {
+            undoCount = data.undoCount;
+            redoCount = data.redoCount;
+            updateEditorControls();
+          }
+          return data;
+        } catch (error) {
+          setStatus(`Could not load shared history: ${error.message}`, true);
+          return null;
+        }
+      }
+
+      async function runEditorCommand(command, successMessage) {
+        if (!requireEditor()) return;
+        if (!remoteReady) {
+          setStatus("The shared Google Sheet is not connected.", true);
+          return;
+        }
+        if (dirty || hasPendingForm()) {
+          setStatus("Save or discard your pending edits before using Undo, Redo or Restore.", true);
+          return;
+        }
+        const requestId = makeId();
+        try {
+          setStatus("Updating shared history...");
+          await fetch(apiUrl, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=UTF-8" },
+            body: JSON.stringify({ ...command, editor: editorIdentity, requestId })
+          });
+          const status = await readApi("actionStatus", { requestId });
+          if (!status.found) {
+            const history = await refreshHistory();
+            const undoRedoConflict = command.action === "undo" ? history?.undoConflict
+              : command.action === "redo" ? history?.redoConflict : false;
+            if (undoRedoConflict) {
+              throw new Error("Conflict: another editor changed the same item. Your action was not applied.");
+            }
+            throw new Error("The action was not confirmed. The item may have changed; reload the shared itinerary and try again.");
+          }
+          const latest = await readSharedState();
+          applySharedState(latest, successMessage);
+          await refreshHistory();
+          setStatus(successMessage);
+        } catch (error) {
+          setStatus(error.message, true);
+        }
       }
 
       function addItem(sectionId) {
+        if (!requireEditor()) return;
         const section = findSection(sectionId);
         if (!section) return;
         const item = { id: makeId(), name: section.kind === "friends" ? "New friend" : "New item", url: "" };
@@ -1664,6 +2016,7 @@
       }
 
       function addTitle() {
+        if (!requireEditor()) return;
         const section = {
           id: makeId(),
           title: "New title",
@@ -1681,6 +2034,7 @@
       }
 
       function deleteSection(sectionId) {
+        if (!requireEditor()) return;
         const section = findSection(sectionId);
         if (!section) return;
         if (!window.confirm(`Delete "${section.title}" and its contents?`)) return;
@@ -1722,6 +2076,7 @@
       }
 
       function updateFromEditable(element) {
+        if (!requireEditor()) return;
         const value = element.isContentEditable
           ? element.innerText.replace(/\r/g, "").replace(/\n+$/, "")
           : element.value;
@@ -1748,6 +2103,8 @@
           }
         }
         if (scope === "link" && field === "url") {
+          const linkInfo = element.closest(".link-info");
+          if (linkInfo) updateInstagramPreview(linkInfo, value);
           const open = element.closest(".link-card")?.querySelector(".link-open");
           const href = safeUrl(value);
           if (open && href) {
@@ -1764,14 +2121,33 @@
       document.getElementById("save-button").addEventListener("click", saveNow);
       document.getElementById("add-title-button").addEventListener("click", addTitle);
       reloadButton.addEventListener("click", reloadSharedState);
-      contributorInput.addEventListener("input", () => {
-        state.userName = contributorInput.value;
-        markUnsaved();
+      editorStartButton.addEventListener("click", () => activateEditor(contributorInput.value));
+      editorNameButton.addEventListener("click", () => {
+        if (dirty || hasPendingForm()) {
+          setStatus("Save or discard your pending edits before changing your editor name.", true);
+          return;
+        }
+        contributorInput.value = editorIdentity?.name || "";
+        editingEnabled = false;
+        updateEditorControls();
+        contributorInput.focus();
+        setStatus("Update your name and select START EDITING. Your browser ID will stay the same.");
+      });
+      document.getElementById("history-button").addEventListener("click", () => {
+        managementPanel.hidden = !managementPanel.hidden;
+        if (!managementPanel.hidden) void refreshHistory();
+      });
+      undoButton.addEventListener("click", () => {
+        void runEditorCommand({ action: "undo" }, "Your last action was undone.");
+      });
+      redoButton.addEventListener("click", () => {
+        void runEditorCommand({ action: "redo" }, "Your last undone action was redone.");
       });
 
       document.addEventListener("input", (event) => {
         const target = event.target;
         if (!(target instanceof HTMLElement) || !target.dataset.scope) return;
+        if (!requireEditor()) return;
         updateFromEditable(target);
         if (target.dataset.scope === "item" && target.dataset.field === "url" &&
             findSection(target.dataset.sectionId)?.kind === "friends") {
@@ -1810,6 +2186,7 @@
         event.returnValue = "";
       });
 
+      initializeEditorIdentity();
       void initializeStorage();
     </script>
   </body>
