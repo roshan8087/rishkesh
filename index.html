@@ -342,16 +342,6 @@
       .link-info { display: grid; min-width: 0; gap: 4px; }
       .link-title { color: var(--teal-dark); font-size: 12px; font-weight: 850; overflow-wrap: anywhere; }
       .link-url { color: var(--muted); font-size: 10px; line-height: 1.4; overflow-wrap: anywhere; }
-      .link-card.instagram-link-card { align-items: flex-start; flex-direction: column; }
-      .instagram-preview {
-        display: block;
-        width: min(100%, 400px);
-        height: 500px;
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        background: white;
-      }
-      .instagram-preview-note { color: var(--muted); font-size: 10px; line-height: 1.5; }
       .link-actions, .item-actions { display: flex; flex-wrap: wrap; flex: 0 0 auto; align-items: center; gap: 5px; }
       .link-actions .button { min-height: 30px; padding: 0 9px; font-size: 9px; }
       .item-list { display: grid; gap: 8px; }
@@ -424,16 +414,6 @@
         font-size: 11px;
         font-weight: 750;
       }
-      .place-chip.instagram-place-chip {
-        display: grid;
-        flex-basis: min(100%, 420px);
-        justify-items: start;
-        align-items: start;
-        border-radius: 14px;
-        white-space: normal;
-      }
-      .instagram-place-chip .instagram-preview { width: min(100%, 390px); }
-      .instagram-place-chip .place-form-host { width: 100%; }
       .place-label { min-width: 0; max-width: 250px; overflow-wrap: anywhere; }
       .place-open { color: var(--teal-dark); font-size: 10px; font-weight: 900; text-decoration: none; }
       .place-action { padding: 2px 5px; border: 0; border-radius: 999px; background: var(--teal-soft); color: var(--teal-dark); font-size: 9px; font-weight: 900; }
@@ -1029,53 +1009,6 @@
         }
       }
 
-      function instagramEmbedDetails(value) {
-        try {
-          const url = new URL(String(value || ""));
-          if (url.protocol !== "https:" || !["instagram.com", "www.instagram.com"].includes(url.hostname)) return null;
-          const match = url.pathname.match(/^\/(p|reel|tv)\/([A-Za-z0-9_-]+)\/?$/);
-          return match ? { type: match[1], shortcode: match[2] } : null;
-        } catch {
-          return null;
-        }
-      }
-
-      function isInstagramUrl(value) {
-        try {
-          const url = new URL(String(value || ""));
-          return ["instagram.com", "www.instagram.com"].includes(url.hostname);
-        } catch {
-          return false;
-        }
-      }
-
-      function createInstagramPreview(value) {
-        const details = instagramEmbedDetails(value);
-        if (!details) return null;
-        const frame = createElement("iframe", "instagram-preview");
-        frame.src = `https://www.instagram.com/${details.type}/${details.shortcode}/embed/`;
-        frame.title = "Instagram post preview";
-        frame.loading = "lazy";
-        frame.referrerPolicy = "strict-origin-when-cross-origin";
-        frame.allow = "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share";
-        frame.allowFullscreen = true;
-        return frame;
-      }
-
-      function updateInstagramPreview(container, value) {
-        container.querySelectorAll(".instagram-preview, .instagram-preview-note").forEach((element) => element.remove());
-        const preview = createInstagramPreview(value);
-        if (preview) container.append(preview);
-        else if (isInstagramUrl(value)) {
-          container.append(createElement(
-            "small",
-            "instagram-preview-note",
-            "Instagram profiles cannot be embedded here. Open the profile, or use a public post/reel link for a preview."
-          ));
-        }
-        container.closest(".link-card")?.classList.toggle("instagram-link-card", Boolean(preview));
-      }
-
       function createElement(tag, className, text) {
         const element = document.createElement(tag);
         if (className) element.className = className;
@@ -1620,7 +1553,6 @@
           info.append(editableText("span", link.url, "link-url", {
             scope: "link", sectionId: section.id, linkId: link.id, field: "url"
           }));
-          updateInstagramPreview(info, link.url);
           const actions = createElement("div", "link-actions");
           const href = safeUrl(link.url);
           const open = createElement("a", "button button-teal link-open", link.openLabel || "OPEN ↗");
@@ -1789,11 +1721,7 @@
           }));
           const chips = createElement("div", "place-chips");
           group.items.forEach((item) => {
-            const preview = createInstagramPreview(item.url);
-            const chip = createElement(
-              "div",
-              `place-chip${preview ? " instagram-place-chip" : ""}`
-            );
+            const chip = createElement("div", "place-chip");
             const label = editableText("span", item.name, "place-label", {
               scope: "item", sectionId: section.id, groupIndex, itemId: item.id, field: "name"
             });
@@ -1805,14 +1733,6 @@
               open.rel = "noopener noreferrer";
               open.setAttribute("aria-label", `Open link for ${item.name}`);
               chip.append(open);
-            }
-            if (preview) chip.append(preview);
-            else if (isInstagramUrl(item.url)) {
-              chip.append(createElement(
-                "small",
-                "instagram-preview-note",
-                "Use a public post/reel URL to show a preview."
-              ));
             }
             const formHost = createElement("div", "place-form-host");
             addButton(chip, "LINK", "place-action", () => renderItemLinkForm(section, item, groupIndex, formHost));
@@ -2155,8 +2075,6 @@
           }
         }
         if (scope === "link" && field === "url") {
-          const linkInfo = element.closest(".link-info");
-          if (linkInfo) updateInstagramPreview(linkInfo, value);
           const open = element.closest(".link-card")?.querySelector(".link-open");
           const href = safeUrl(value);
           if (open && href) {

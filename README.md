@@ -27,7 +27,7 @@ The site asks for an editor name before enabling edits and stores the name plus 
 
 Run the Apps Script logic tests locally with `node --test google-apps-script/Code.test.js`. They use an in-memory Sheets mock and do not access the live spreadsheet.
 
-Instagram post, reel, and TV links added to a section link or place are shown with Instagram's public embed player. Private posts, profile URLs, or embeds Instagram does not serve remain normal links; public embeddability is controlled by Instagram.
+Instagram links in section links and places remain clickable links; the site does not embed Instagram previews.
 
 ## Public editing warning
 
